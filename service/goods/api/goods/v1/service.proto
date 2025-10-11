@@ -1,0 +1,204 @@
+syntax = "proto3";
+
+package service.goods.api.goods.v1;
+
+option go_package = "mshop/service/goods/api/goods/v1;v1";
+option java_multiple_files = true;
+option java_package = "service.goods.api.goods.v1";
+
+import "goods/v1/message.proto";
+import "google/api/annotations.proto";
+
+
+// Goods 服务定义
+// 提供商品、分类、品牌、轮播图等相关功能
+service Goods{
+    // ========== 商品相关接口 ==========
+    
+    // 获取商品列表
+    rpc GoodsList(GoodsFilterRequest) returns(GoodsListResponse) {
+        option (google.api.http) = {
+            get: "/v1/goods"
+        };
+    }
+    
+    // 批量获取商品信息 - 用于订单提交时批量查询商品信息
+    rpc BatchGetGoods(BatchGoodsIdInfo) returns(GoodsListResponse) {
+        option (google.api.http) = {
+            post: "/v1/goods/batch"
+            body: "*"
+        };
+    }
+    
+    // 创建商品
+    rpc CreateGoods(CreateGoodsInfo) returns (GoodsInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/goods"
+            body: "*"
+        };
+    }
+    
+    // 删除商品
+    rpc DeleteGoods(DeleteGoodsInfo) returns (Empty) {
+        option (google.api.http) = {
+            delete: "/v1/goods/{id}"
+        };
+    }
+    
+    // 更新商品信息
+    rpc UpdateGoods(CreateGoodsInfo) returns (Empty) {
+        option (google.api.http) = {
+            put: "/v1/goods/{id}"
+            body: "*"
+        };
+    }
+    
+    // 获取商品详情
+    rpc GetGoodsDetail(GoodInfoRequest) returns(GoodsInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/goods/{id}"
+        };
+    }
+
+    // ========== 商品分类相关接口 ==========
+    
+    // 获取所有分类列表
+    rpc GetAllCategorysList(Empty) returns(CategoryListResponse) {
+        option (google.api.http) = {
+            get: "/v1/categories"
+        };
+    }
+    
+    // 获取子分类
+    rpc GetSubCategory(CategoryListRequest) returns(SubCategoryListResponse) {
+        option (google.api.http) = {
+            get: "/v1/categories/{id}/sub"
+        };
+    }
+    
+    // 创建分类
+    rpc CreateCategory(CategoryInfoRequest) returns(CategoryInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/categories"
+            body: "*"
+        };
+    }
+    
+    // 删除分类
+    rpc DeleteCategory(DeleteCategoryRequest) returns(Empty) {
+        option (google.api.http) = {
+            delete: "/v1/categories/{id}"
+        };
+    }
+    
+    // 更新分类信息
+    rpc UpdateCategory(CategoryInfoRequest) returns(Empty) {
+        option (google.api.http) = {
+            put: "/v1/categories/{id}"
+            body: "*"
+        };
+    }
+
+    // ========== 品牌相关接口 ==========
+    
+    // 获取品牌列表
+    rpc BrandList(BrandFilterRequest) returns(BrandListResponse) {
+        option (google.api.http) = {
+            get: "/v1/brands"
+        };
+    }
+    
+    // 创建品牌
+    rpc CreateBrand(BrandRequest) returns(BrandInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/brands"
+            body: "*"
+        };
+    }
+    
+    // 删除品牌
+    rpc DeleteBrand(BrandRequest) returns(Empty) {
+        option (google.api.http) = {
+            delete: "/v1/brands/{id}"
+        };
+    }
+    
+    // 更新品牌信息
+    rpc UpdateBrand(BrandRequest) returns(Empty) {
+        option (google.api.http) = {
+            put: "/v1/brands/{id}"
+            body: "*"
+        };
+    }
+
+    // ========== 轮播图相关接口 ==========
+    
+    // 获取轮播图列表
+    rpc BannerList(Empty) returns(BannerListResponse) {
+        option (google.api.http) = {
+            get: "/v1/banners"
+        };
+    }
+    
+    // 创建轮播图
+    rpc CreateBanner(BannerRequest) returns(BannerResponse) {
+        option (google.api.http) = {
+            post: "/v1/banners"
+            body: "*"
+        };
+    }
+    
+    // 删除轮播图
+    rpc DeleteBanner(BannerRequest) returns(Empty) {
+        option (google.api.http) = {
+            delete: "/v1/banners/{id}"
+        };
+    }
+    
+    // 更新轮播图
+    rpc UpdateBanner(BannerRequest) returns(Empty) {
+        option (google.api.http) = {
+            put: "/v1/banners/{id}"
+            body: "*"
+        };
+    }
+
+    // ========== 品牌分类关联接口 ==========
+    
+    // 获取品牌分类关联列表
+    rpc CategoryBrandList(CategoryBrandFilterRequest) returns(CategoryBrandListResponse) {
+        option (google.api.http) = {
+            get: "/v1/category-brands"
+        };
+    }
+    
+    // 通过分类获取品牌列表
+    rpc GetCategoryBrandList(CategoryInfoRequest) returns(BrandListResponse) {
+        option (google.api.http) = {
+            get: "/v1/categories/{id}/brands"
+        };
+    }
+    
+    // 创建品牌分类关联
+    rpc CreateCategoryBrand(CategoryBrandRequest) returns(CategoryBrandResponse) {
+        option (google.api.http) = {
+            post: "/v1/category-brands"
+            body: "*"
+        };
+    }
+    
+    // 删除品牌分类关联
+    rpc DeleteCategoryBrand(CategoryBrandRequest) returns(Empty) {
+        option (google.api.http) = {
+            delete: "/v1/category-brands/{id}"
+        };
+    }
+    
+    // 更新品牌分类关联
+    rpc UpdateCategoryBrand(CategoryBrandRequest) returns(Empty) {
+        option (google.api.http) = {
+            put: "/v1/category-brands/{id}"
+            body: "*"
+        };
+    }
+}

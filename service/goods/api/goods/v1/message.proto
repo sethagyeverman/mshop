@@ -1,0 +1,259 @@
+syntax = "proto3";
+
+package service.goods.api.goods.v1;
+
+option go_package = "mshop/service/goods/api/goods/v1;v1";
+option java_multiple_files = true;
+option java_package = "service.goods.api.goods.v1";
+
+
+// Empty 消息类型，用于不需要返回数据的 RPC 调用
+message Empty {
+}
+
+// ========== 分类相关消息 ==========
+
+// 分类列表请求
+message CategoryListRequest {
+    int32 id = 1;      // 分类ID
+    int32 level = 2;   // 分类层级
+}
+
+// 分类信息请求
+message CategoryInfoRequest {
+    int32 id = 1;              // 分类ID
+    string name = 2;           // 分类名称
+    int32 parentCategory = 3;  // 父分类ID
+    int32 level = 4;           // 分类层级
+    bool isTab = 5;            // 是否为标签页
+}
+
+// 删除分类请求
+message DeleteCategoryRequest {
+    int32 id = 1;  // 要删除的分类ID
+}
+
+// 查询分类请求
+message QueryCategoryRequest {
+    int32 id = 1;      // 分类ID
+    string name = 2;   // 分类名称
+}
+
+// 分类信息响应
+message CategoryInfoResponse {
+    int32 id = 1;              // 分类ID
+    string name = 2;           // 分类名称
+    int32 parentCategory = 3;  // 父分类ID
+    int32 level = 4;           // 分类层级
+    bool isTab = 5;            // 是否为标签页
+}
+
+// 分类列表响应
+message CategoryListResponse {
+    int32 total = 1;                           // 总数
+    repeated CategoryInfoResponse data = 2;    // 分类数据列表
+    string jsonData = 3;                       // JSON格式数据
+}
+
+// 子分类列表响应
+message SubCategoryListResponse {
+    int32 total = 1;                           // 总数
+    CategoryInfoResponse info = 2;             // 父分类信息
+    repeated CategoryInfoResponse subCategorys = 3;  // 子分类列表
+}
+
+// ========== 品牌分类关联相关消息 ==========
+
+// 品牌分类过滤请求
+message CategoryBrandFilterRequest  {
+    int32 pages = 1;        // 页码
+    int32 pagePerNums = 2; // 每页数量
+}
+
+// 通用过滤请求
+message FilterRequest  {
+    int32 pages = 1;        // 页码
+    int32 pagePerNums = 2; // 每页数量
+}
+
+// 品牌分类关联请求
+message CategoryBrandRequest{
+    int32 id = 1;         // 关联ID
+    int32 categoryId = 2; // 分类ID
+    int32 brandId = 3;    // 品牌ID
+}
+
+// 品牌分类关联响应
+message CategoryBrandResponse{
+    int32 id = 1;                    // 关联ID
+    BrandInfoResponse brand = 2;     // 品牌信息
+    CategoryInfoResponse category = 3; // 分类信息
+}
+
+// ========== 轮播图相关消息 ==========
+
+// 轮播图请求
+message BannerRequest {
+    int32 id = 1;        // 轮播图ID
+    int32 index = 2;     // 排序索引
+    string image = 3;    // 图片URL
+    string url = 4;      // 跳转链接
+}
+
+// 轮播图响应
+message BannerResponse {
+    int32 id = 1;        // 轮播图ID
+    int32 index = 2;     // 排序索引
+    string image = 3;    // 图片URL
+    string url = 4;      // 跳转链接
+}
+
+// 轮播图列表响应
+message BannerListResponse {
+    int32 total = 1;                    // 总数
+    repeated BannerResponse data = 2;   // 轮播图数据列表
+}
+
+// ========== 品牌相关消息 ==========
+
+// 品牌过滤请求
+message BrandFilterRequest {
+    int32 pages = 1;        // 页码
+    int32 pagePerNums = 2; // 每页数量
+}
+
+// 品牌请求
+message BrandRequest {
+    int32 id = 1;      // 品牌ID
+    string name = 2;   // 品牌名称
+    string logo = 3;   // 品牌Logo
+}
+
+// 品牌信息响应
+message BrandInfoResponse {
+    int32 id = 1;      // 品牌ID
+    string name = 2;   // 品牌名称
+    string logo = 3;   // 品牌Logo
+}
+
+// 品牌列表响应
+message BrandListResponse {
+    int32 total = 1;                    // 总数
+    repeated BrandInfoResponse data = 2; // 品牌数据列表
+}
+
+// 品牌分类关联列表响应
+message CategoryBrandListResponse {
+    int32 total = 1;                        // 总数
+    repeated CategoryBrandResponse data = 2; // 品牌分类关联数据列表
+}
+
+
+
+// ========== 商品相关消息 ==========
+
+// 批量商品ID信息
+message BatchGoodsIdInfo {
+    repeated int32 id = 1;  // 商品ID列表
+}
+
+// 删除商品信息
+message DeleteGoodsInfo {
+    int32 id = 1;  // 要删除的商品ID
+}
+
+// 分类简要信息响应
+message CategoryBriefInfoResponse {
+    int32 id = 1;      // 分类ID
+    string name = 2;   // 分类名称
+}
+
+// 分类过滤请求
+message CategoryFilterRequest {
+    int32 id = 1;      // 分类ID
+    bool  isTab = 2;   // 是否为标签页
+}
+
+// 商品信息请求
+message GoodInfoRequest {
+    int32 id = 1;  // 商品ID
+}
+
+// 创建商品信息
+message CreateGoodsInfo {
+    int32 id = 1;                    // 商品ID
+    string name = 2;                 // 商品名称
+    string goodsSn = 3;              // 商品编号
+    int32 stocks = 7;                // 库存数量
+    float marketPrice = 8;           // 市场价格
+    float shopPrice = 9;             // 店铺价格
+    string goodsBrief = 10;          // 商品简介
+    string goodsDesc = 11;           // 商品描述
+    bool shipFree = 12;              // 是否包邮
+    repeated string images = 13;      // 商品图片列表
+    repeated string descImages = 14; // 商品描述图片列表
+    string goodsFrontImage = 15;     // 商品主图
+    bool isNew = 16;                 // 是否新品
+    bool isHot = 17;                 // 是否热销
+    bool onSale = 18;                // 是否上架
+    int32 categoryId = 19;           // 分类ID
+    int32 brandId = 20;              // 品牌ID
+}
+
+// 商品减库存请求
+message GoodsReduceRequest {
+    int32 GoodsId = 1;  // 商品ID
+    int32 nums = 2;     // 减少数量
+}
+
+// 批量分类信息请求
+message BatchCategoryInfoRequest {
+    repeated int32 id = 1;  // 分类ID列表
+    int32 goodsNums = 2;     // 商品数量
+    int32 brandNums = 3;     // 品牌数量
+}
+
+// 商品过滤请求
+message GoodsFilterRequest  {
+    int32 priceMin = 1;      // 最低价格
+    int32 priceMax = 2;      // 最高价格
+    bool  isHot = 3;         // 是否热销
+    bool  isNew = 4;         // 是否新品
+    bool  isTab = 5;         // 是否为标签页
+    int32 topCategory = 6;   // 顶级分类
+    int32 pages = 7;         // 页码
+    int32 pagePerNums = 8;   // 每页数量
+    string keyWords = 9;     // 关键词
+    int32 brand = 10;        // 品牌ID
+}
+
+// 商品信息响应
+message GoodsInfoResponse {
+    int32 id = 1;                        // 商品ID
+    int32 categoryId = 2;                 // 分类ID
+    string name = 3;                     // 商品名称
+    string goodsSn = 4;                  // 商品编号
+    int32 clickNum = 5;                  // 点击数量
+    int32 soldNum = 6;                   // 销售数量
+    int32 favNum = 7;                    // 收藏数量
+    float marketPrice = 9;               // 市场价格
+    float shopPrice = 10;                // 店铺价格
+    string goodsBrief = 11;              // 商品简介
+    string goodsDesc = 12;               // 商品描述
+    bool shipFree = 13;                  // 是否包邮
+    repeated string images = 14;         // 商品图片列表
+    repeated string descImages = 15;     // 商品描述图片列表
+    string goodsFrontImage = 16;        // 商品主图
+    bool isNew = 17;                     // 是否新品
+    bool isHot = 18;                     // 是否热销
+    bool onSale = 19;                    // 是否上架
+    int64 addTime = 20;                  // 添加时间
+    CategoryBriefInfoResponse category = 21; // 分类信息
+    BrandInfoResponse brand = 22;        // 品牌信息
+}
+
+// 商品列表响应
+message GoodsListResponse {
+    int32 total = 1;                     // 总数
+    repeated GoodsInfoResponse data = 2; // 商品数据列表
+}
