@@ -36,45 +36,49 @@ func (s *GoodsService) UpdateGoods(ctx context.Context, req *pb.CreateGoodsInfo)
 func (s *GoodsService) GetGoodsDetail(ctx context.Context, req *pb.GoodInfoRequest) (*pb.GoodsInfoResponse, error) {
 	return &pb.GoodsInfoResponse{}, nil
 }
+
 func (s *GoodsService) GetAllCategorysList(ctx context.Context, req *pb.Empty) (*pb.CategoryListResponse, error) {
-	return &pb.CategoryListResponse{}, nil
+	return s.goodsUsecase.GetAllCategorysList(ctx, req)
 }
 func (s *GoodsService) GetSubCategory(ctx context.Context, req *pb.CategoryListRequest) (*pb.SubCategoryListResponse, error) {
-	return &pb.SubCategoryListResponse{}, nil
+	return s.goodsUsecase.GetSubCategory(ctx, req)
 }
 func (s *GoodsService) CreateCategory(ctx context.Context, req *pb.CategoryInfoRequest) (*pb.CategoryInfoResponse, error) {
-	return &pb.CategoryInfoResponse{}, nil
+	return s.goodsUsecase.CreateCategory(ctx, req)
 }
 func (s *GoodsService) DeleteCategory(ctx context.Context, req *pb.DeleteCategoryRequest) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.DeleteCategory(ctx, req)
 }
 func (s *GoodsService) UpdateCategory(ctx context.Context, req *pb.CategoryInfoRequest) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.UpdateCategory(ctx, req)
 }
+
 func (s *GoodsService) BrandList(ctx context.Context, req *pb.BrandFilterRequest) (*pb.BrandListResponse, error) {
-	return &pb.BrandListResponse{}, nil
+	return s.goodsUsecase.BrandList(ctx, req)
 }
 func (s *GoodsService) CreateBrand(ctx context.Context, req *pb.BrandRequest) (*pb.BrandInfoResponse, error) {
-	return &pb.BrandInfoResponse{}, nil
+	return s.goodsUsecase.CreateBrand(ctx, req)
 }
 func (s *GoodsService) DeleteBrand(ctx context.Context, req *pb.BrandRequest) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.DeleteBrand(ctx, req)
 }
 func (s *GoodsService) UpdateBrand(ctx context.Context, req *pb.BrandRequest) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.UpdateBrand(ctx, req)
 }
+
 func (s *GoodsService) BannerList(ctx context.Context, req *pb.Empty) (*pb.BannerListResponse, error) {
-	return &pb.BannerListResponse{}, nil
+	return s.goodsUsecase.BannerList(ctx)
 }
 func (s *GoodsService) CreateBanner(ctx context.Context, req *pb.BannerRequest) (*pb.BannerResponse, error) {
-	return &pb.BannerResponse{}, nil
+	return s.goodsUsecase.CreateBanner(ctx, req)
 }
 func (s *GoodsService) DeleteBanner(ctx context.Context, req *pb.BannerRequest) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.DeleteBanner(ctx, req)
 }
 func (s *GoodsService) UpdateBanner(ctx context.Context, req *pb.BannerRequest) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.UpdateBanner(ctx, req)
 }
+
 func (s *GoodsService) CategoryBrandList(ctx context.Context, req *pb.CategoryBrandFilterRequest) (*pb.CategoryBrandListResponse, error) {
 	return &pb.CategoryBrandListResponse{}, nil
 }

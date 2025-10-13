@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package errx;
+
+option go_package = "mshop/pkg/errx;errx";
+option java_multiple_files = true;
+option java_package = "com.mshop.errx";
+option objc_class_prefix = "ERRX";
+
+import "errors/errors.proto";
+
+// 商品服务错误码定义
+enum ErrorReason {
+  // 设置默认错误码
+  option (errors.default_code) = 500;
+
+  // ============ 通用错误 ============
+  // 参数错误 - Bad Request
+  INVALID_PARAMS = 0 [(errors.code) = 400];
+  // 数据库错误 - Internal Server Error
+  DATABASE_ERROR = 1 [(errors.code) = 500];
+  // 记录未找到 - Not Found
+  RECORD_NOT_FOUND = 2 [(errors.code) = 404];
+  // 内部服务错误 - Internal Server Error
+  INTERNAL_ERROR = 3 [(errors.code) = 500];
+  // 权限不足 - Forbidden
+  PERMISSION_DENIED = 4 [(errors.code) = 403];
+  // 未授权 - Unauthorized
+  UNAUTHORIZED = 5 [(errors.code) = 401];
+
+  // ============ 商品错误 ============
+  // 商品不存在 - Not Found
+  GOODS_NOT_FOUND = 10 [(errors.code) = 404];
+  // 商品已下架 - Bad Request
+  GOODS_OFF_SALE = 11 [(errors.code) = 400];
+  // 商品库存不足 - Bad Request
+  GOODS_STOCK_INSUFFICIENT = 12 [(errors.code) = 400];
+  // 商品已删除 - Gone
+  GOODS_DELETED = 13 [(errors.code) = 410];
+  // 商品编号已存在 - Conflict
+  GOODS_SN_EXISTS = 14 [(errors.code) = 409];
+  // 商品名称不能为空 - Bad Request
+  GOODS_NAME_EMPTY = 15 [(errors.code) = 400];
+  // 商品价格无效 - Bad Request
+  GOODS_PRICE_INVALID = 16 [(errors.code) = 400];
+  // 商品创建失败 - Internal Server Error
+  GOODS_CREATE_FAILED = 17 [(errors.code) = 500];
+  // 商品更新失败 - Internal Server Error
+  GOODS_UPDATE_FAILED = 18 [(errors.code) = 500];
+  // 商品删除失败 - Internal Server Error
+  GOODS_DELETE_FAILED = 19 [(errors.code) = 500];
+
+  // ============ 品牌错误 ============
+  // 品牌不存在 - Not Found
+  BRAND_NOT_FOUND = 20 [(errors.code) = 404];
+  // 品牌名称已存在 - Conflict
+  BRAND_NAME_EXISTS = 21 [(errors.code) = 409];
+  // 品牌名称不能为空 - Bad Request
+  BRAND_NAME_EMPTY = 22 [(errors.code) = 400];
+  // 品牌创建失败 - Internal Server Error
+  BRAND_CREATE_FAILED = 23 [(errors.code) = 500];
+  // 品牌更新失败 - Internal Server Error
+  BRAND_UPDATE_FAILED = 24 [(errors.code) = 500];
+  // 品牌删除失败（有关联商品）- Conflict
+  BRAND_DELETE_FAILED = 25 [(errors.code) = 409];
+  // 品牌已删除 - Gone
+  BRAND_DELETED = 26 [(errors.code) = 410];
+
+  // ============ 分类错误 ============
+  // 分类不存在 - Not Found
+  CATEGORY_NOT_FOUND = 30 [(errors.code) = 404];
+  // 分类名称已存在 - Conflict
+  CATEGORY_NAME_EXISTS = 31 [(errors.code) = 409];
+  // 分类名称不能为空 - Bad Request
+  CATEGORY_NAME_EMPTY = 32 [(errors.code) = 400];
+  // 分类层级错误 - Bad Request
+  CATEGORY_LEVEL_INVALID = 33 [(errors.code) = 400];
+  // 父分类不存在 - Not Found
+  PARENT_CATEGORY_NOT_FOUND = 34 [(errors.code) = 404];
+  // 分类创建失败 - Internal Server Error
+  CATEGORY_CREATE_FAILED = 35 [(errors.code) = 500];
+  // 分类更新失败 - Internal Server Error
+  CATEGORY_UPDATE_FAILED = 36 [(errors.code) = 500];
+  // 分类删除失败（有子分类）- Conflict
+  CATEGORY_HAS_CHILDREN = 37 [(errors.code) = 409];
+  // 分类删除失败（有关联商品）- Conflict
+  CATEGORY_HAS_GOODS = 38 [(errors.code) = 409];
+  // 分类已删除 - Gone
+  CATEGORY_DELETED = 39 [(errors.code) = 410];
+  // 不能设置为自己的父分类 - Bad Request
+  CATEGORY_PARENT_INVALID = 40 [(errors.code) = 400];
+
+  // ============ 轮播图错误 ============
+  // 轮播图不存在 - Not Found
+  BANNER_NOT_FOUND = 50 [(errors.code) = 404];
+  // 轮播图图片不能为空 - Bad Request
+  BANNER_IMAGE_EMPTY = 51 [(errors.code) = 400];
+  // 轮播图链接不能为空 - Bad Request
+  BANNER_URL_EMPTY = 52 [(errors.code) = 400];
+  // 轮播图创建失败 - Internal Server Error
+  BANNER_CREATE_FAILED = 53 [(errors.code) = 500];
+  // 轮播图更新失败 - Internal Server Error
+  BANNER_UPDATE_FAILED = 54 [(errors.code) = 500];
+  // 轮播图删除失败 - Internal Server Error
+  BANNER_DELETE_FAILED = 55 [(errors.code) = 500];
+  // 轮播图已删除 - Gone
+  BANNER_DELETED = 56 [(errors.code) = 410];
+  // 轮播图索引重复 - Conflict
+  BANNER_INDEX_EXISTS = 57 [(errors.code) = 409];
+
+  // ============ 分类品牌关联错误 ============
+  // 分类品牌关联不存在 - Not Found
+  CATEGORY_BRAND_NOT_FOUND = 60 [(errors.code) = 404];
+  // 分类品牌关联已存在 - Conflict
+  CATEGORY_BRAND_EXISTS = 61 [(errors.code) = 409];
+  // 分类品牌关联创建失败 - Internal Server Error
+  CATEGORY_BRAND_CREATE_FAILED = 62 [(errors.code) = 500];
+  // 分类品牌关联删除失败 - Internal Server Error
+  CATEGORY_BRAND_DELETE_FAILED = 63 [(errors.code) = 500];
+}
+
