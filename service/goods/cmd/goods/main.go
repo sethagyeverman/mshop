@@ -4,11 +4,11 @@ import (
 	"flag"
 	"os"
 
+	"mshop/pkg/nacosx"
 	"mshop/service/goods/internal/conf"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
-	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
@@ -23,13 +23,12 @@ var (
 	// Version is the version of the compiled software.
 	Version string
 	// flagconf is the config flag.
-	flagconf string
-
+	env   string
 	id, _ = os.Hostname()
 )
 
 func init() {
-	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
+	flag.StringVar(&env, "env", "dev", "config path, eg: -env dev")
 }
 
 func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
@@ -57,12 +56,19 @@ func main() {
 		// "trace.id", tracing.TraceID(),
 		// "span.id", tracing.SpanID(),
 	)
-	c := config.New(
-		config.WithSource(
-			file.NewSource(flagconf),
-		),
+
+	sources, err := nacosx.NewNacosConfigSource(
+		nacosx.WithNamespace("mshop"),
+		nacosx.WithEnv(env),
 	)
-	defer c.Close()
+
+	if err != nil {
+		panic(err)
+	}
+
+	c := config.New(
+		config.WithSource(sources...),
+	)
 
 	if err := c.Load(); err != nil {
 		panic(err)
@@ -72,6 +78,8 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
+
+	defer c.Close()
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
 	if err != nil {
