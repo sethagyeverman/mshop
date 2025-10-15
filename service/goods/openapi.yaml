@@ -1,0 +1,901 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Goods API
+    description: |-
+        Goods 服务定义
+         提供商品、分类、品牌、轮播图等相关功能
+    version: 0.0.1
+paths:
+    /v1/banners:
+        get:
+            tags:
+                - Goods
+            description: 获取轮播图列表
+            operationId: Goods_BannerList
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.BannerListResponse'
+        post:
+            tags:
+                - Goods
+            description: 创建轮播图
+            operationId: Goods_CreateBanner
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.BannerRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.BannerResponse'
+    /v1/banners/{id}:
+        put:
+            tags:
+                - Goods
+            description: 更新轮播图
+            operationId: Goods_UpdateBanner
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.BannerRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+        delete:
+            tags:
+                - Goods
+            description: 删除轮播图
+            operationId: Goods_DeleteBanner
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: index
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: image
+                  in: query
+                  schema:
+                    type: string
+                - name: url
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+    /v1/brands:
+        get:
+            tags:
+                - Goods
+            description: 获取品牌列表
+            operationId: Goods_BrandList
+            parameters:
+                - name: pages
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pagePerNums
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.BrandListResponse'
+        post:
+            tags:
+                - Goods
+            description: 创建品牌
+            operationId: Goods_CreateBrand
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.BrandRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.BrandInfoResponse'
+    /v1/brands/{id}:
+        put:
+            tags:
+                - Goods
+            description: 更新品牌信息
+            operationId: Goods_UpdateBrand
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.BrandRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+        delete:
+            tags:
+                - Goods
+            description: 删除品牌
+            operationId: Goods_DeleteBrand
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: logo
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+    /v1/categories:
+        get:
+            tags:
+                - Goods
+            description: 获取所有分类列表
+            operationId: Goods_GetAllCategorysList
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryListResponse'
+        post:
+            tags:
+                - Goods
+            description: 创建分类
+            operationId: Goods_CreateCategory
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryInfoRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryInfoResponse'
+    /v1/categories/{id}:
+        put:
+            tags:
+                - Goods
+            description: 更新分类信息
+            operationId: Goods_UpdateCategory
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryInfoRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+        delete:
+            tags:
+                - Goods
+            description: 删除分类
+            operationId: Goods_DeleteCategory
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+    /v1/categories/{id}/brands:
+        get:
+            tags:
+                - Goods
+            description: 通过分类获取品牌列表
+            operationId: Goods_GetCategoryBrandList
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: parentCategory
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: level
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: isTab
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.BrandListResponse'
+    /v1/categories/{id}/sub:
+        get:
+            tags:
+                - Goods
+            description: 获取子分类
+            operationId: Goods_GetSubCategory
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: level
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.SubCategoryListResponse'
+    /v1/category-brands:
+        get:
+            tags:
+                - Goods
+            description: 获取品牌分类关联列表
+            operationId: Goods_CategoryBrandList
+            parameters:
+                - name: pages
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pagePerNums
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryBrandListResponse'
+        post:
+            tags:
+                - Goods
+            description: 创建品牌分类关联
+            operationId: Goods_CreateCategoryBrand
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryBrandRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryBrandResponse'
+    /v1/category-brands/{id}:
+        put:
+            tags:
+                - Goods
+            description: 更新品牌分类关联
+            operationId: Goods_UpdateCategoryBrand
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryBrandRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+        delete:
+            tags:
+                - Goods
+            description: 删除品牌分类关联
+            operationId: Goods_DeleteCategoryBrand
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: categoryId
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: brandId
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+    /v1/goods:
+        get:
+            tags:
+                - Goods
+            description: 获取商品列表
+            operationId: Goods_GoodsList
+            parameters:
+                - name: priceMin
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: priceMax
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: isHot
+                  in: query
+                  schema:
+                    type: boolean
+                - name: isNew
+                  in: query
+                  schema:
+                    type: boolean
+                - name: isTab
+                  in: query
+                  schema:
+                    type: boolean
+                - name: topCategory
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pages
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pagePerNums
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: keyWords
+                  in: query
+                  schema:
+                    type: string
+                - name: brand
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.GoodsListResponse'
+        post:
+            tags:
+                - Goods
+            description: 创建商品
+            operationId: Goods_CreateGoods
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.CreateGoodsInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.GoodsInfoResponse'
+    /v1/goods/batch:
+        post:
+            tags:
+                - Goods
+            description: 批量获取商品信息 - 用于订单提交时批量查询商品信息
+            operationId: Goods_BatchGetGoods
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.BatchGoodsIdInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.GoodsListResponse'
+    /v1/goods/{id}:
+        get:
+            tags:
+                - Goods
+            description: 获取商品详情
+            operationId: Goods_GetGoodsDetail
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.GoodsInfoResponse'
+        put:
+            tags:
+                - Goods
+            description: 更新商品信息
+            operationId: Goods_UpdateGoods
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.goods.api.goods.v1.CreateGoodsInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+        delete:
+            tags:
+                - Goods
+            description: 删除商品
+            operationId: Goods_DeleteGoods
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.goods.api.goods.v1.Empty'
+components:
+    schemas:
+        service.goods.api.goods.v1.BannerListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.goods.api.goods.v1.BannerResponse'
+            description: 轮播图列表响应
+        service.goods.api.goods.v1.BannerRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                index:
+                    type: integer
+                    format: int32
+                image:
+                    type: string
+                url:
+                    type: string
+            description: 轮播图请求
+        service.goods.api.goods.v1.BannerResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                index:
+                    type: integer
+                    format: int32
+                image:
+                    type: string
+                url:
+                    type: string
+            description: 轮播图响应
+        service.goods.api.goods.v1.BatchGoodsIdInfo:
+            type: object
+            properties:
+                id:
+                    type: array
+                    items:
+                        type: integer
+                        format: int32
+            description: 批量商品ID信息
+        service.goods.api.goods.v1.BrandInfoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                logo:
+                    type: string
+            description: 品牌信息响应
+        service.goods.api.goods.v1.BrandListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.goods.api.goods.v1.BrandInfoResponse'
+            description: 品牌列表响应
+        service.goods.api.goods.v1.BrandRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                logo:
+                    type: string
+            description: 品牌请求
+        service.goods.api.goods.v1.CategoryBrandListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryBrandResponse'
+            description: 品牌分类关联列表响应
+        service.goods.api.goods.v1.CategoryBrandRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                categoryId:
+                    type: integer
+                    format: int32
+                brandId:
+                    type: integer
+                    format: int32
+            description: 品牌分类关联请求
+        service.goods.api.goods.v1.CategoryBrandResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                brand:
+                    $ref: '#/components/schemas/service.goods.api.goods.v1.BrandInfoResponse'
+                category:
+                    $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryInfoResponse'
+            description: 品牌分类关联响应
+        service.goods.api.goods.v1.CategoryBriefInfoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+            description: 分类简要信息响应
+        service.goods.api.goods.v1.CategoryInfoRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                parentCategory:
+                    type: integer
+                    format: int32
+                level:
+                    type: integer
+                    format: int32
+                isTab:
+                    type: boolean
+            description: 分类信息请求
+        service.goods.api.goods.v1.CategoryInfoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                parentCategory:
+                    type: integer
+                    format: int32
+                level:
+                    type: integer
+                    format: int32
+                isTab:
+                    type: boolean
+            description: 分类信息响应
+        service.goods.api.goods.v1.CategoryListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryInfoResponse'
+                jsonData:
+                    type: string
+            description: 分类列表响应
+        service.goods.api.goods.v1.CreateGoodsInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                goodsSn:
+                    type: string
+                stocks:
+                    type: integer
+                    format: int32
+                marketPrice:
+                    type: number
+                    format: float
+                shopPrice:
+                    type: number
+                    format: float
+                goodsBrief:
+                    type: string
+                goodsDesc:
+                    type: string
+                shipFree:
+                    type: boolean
+                images:
+                    type: array
+                    items:
+                        type: string
+                descImages:
+                    type: array
+                    items:
+                        type: string
+                goodsFrontImage:
+                    type: string
+                isNew:
+                    type: boolean
+                isHot:
+                    type: boolean
+                onSale:
+                    type: boolean
+                categoryId:
+                    type: integer
+                    format: int32
+                brandId:
+                    type: integer
+                    format: int32
+            description: 创建商品信息
+        service.goods.api.goods.v1.Empty:
+            type: object
+            properties: {}
+            description: Empty 消息类型，用于不需要返回数据的 RPC 调用
+        service.goods.api.goods.v1.GoodsInfoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                categoryId:
+                    type: integer
+                    format: int32
+                name:
+                    type: string
+                goodsSn:
+                    type: string
+                clickNum:
+                    type: integer
+                    format: int32
+                soldNum:
+                    type: integer
+                    format: int32
+                favNum:
+                    type: integer
+                    format: int32
+                marketPrice:
+                    type: number
+                    format: float
+                shopPrice:
+                    type: number
+                    format: float
+                goodsBrief:
+                    type: string
+                goodsDesc:
+                    type: string
+                shipFree:
+                    type: boolean
+                images:
+                    type: array
+                    items:
+                        type: string
+                descImages:
+                    type: array
+                    items:
+                        type: string
+                goodsFrontImage:
+                    type: string
+                isNew:
+                    type: boolean
+                isHot:
+                    type: boolean
+                onSale:
+                    type: boolean
+                addTime:
+                    type: string
+                category:
+                    $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryBriefInfoResponse'
+                brand:
+                    $ref: '#/components/schemas/service.goods.api.goods.v1.BrandInfoResponse'
+            description: 商品信息响应
+        service.goods.api.goods.v1.GoodsListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.goods.api.goods.v1.GoodsInfoResponse'
+            description: 商品列表响应
+        service.goods.api.goods.v1.SubCategoryListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                info:
+                    $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryInfoResponse'
+                subCategorys:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.goods.api.goods.v1.CategoryInfoResponse'
+            description: 子分类列表响应
+tags:
+    - name: Goods

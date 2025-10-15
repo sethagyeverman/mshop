@@ -1,0 +1,19 @@
+package biz
+
+import "gorm.io/gorm"
+
+func (uc *GoodsUsecase) Paginate(page, pageSize int32) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if page == 0 {
+			page = 1
+		}
+		switch {
+		case pageSize > 100:
+			pageSize = 100
+		case pageSize <= 0:
+			pageSize = 20
+		}
+		offset := (page - 1) * pageSize
+		return db.Offset(int(offset)).Limit(int(pageSize))
+	}
+}
