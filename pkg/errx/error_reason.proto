@@ -9,7 +9,6 @@ option objc_class_prefix = "ERRX";
 
 import "errors/errors.proto";
 
-// 商品服务错误码定义
 enum ErrorReason {
   // 设置默认错误码
   option (errors.default_code) = 500;
@@ -117,5 +116,43 @@ enum ErrorReason {
   CATEGORY_BRAND_CREATE_FAILED = 62 [(errors.code) = 500];
   // 分类品牌关联删除失败 - Internal Server Error
   CATEGORY_BRAND_DELETE_FAILED = 63 [(errors.code) = 500];
+
+  // ============ 库存错误 ============
+  // 库存不存在 - Not Found
+  INVENTORY_NOT_FOUND = 70 [(errors.code) = 404];
+  // 库存不足 - Bad Request
+  INVENTORY_INSUFFICIENT = 71 [(errors.code) = 400];
+  // 库存扣减失败 - Internal Server Error
+  INVENTORY_SELL_FAILED = 72 [(errors.code) = 500];
+  // 库存归还失败 - Internal Server Error
+  INVENTORY_REBACK_FAILED = 73 [(errors.code) = 500];
+  // 库存设置失败 - Internal Server Error
+  INVENTORY_SET_FAILED = 74 [(errors.code) = 500];
+  // 订单号为空 - Bad Request
+  ORDER_SN_EMPTY = 75 [(errors.code) = 400];
+  // 订单号已存在 - Conflict
+  ORDER_SN_EXISTS = 76 [(errors.code) = 409];
+  // 商品ID无效 - Bad Request
+  GOODS_ID_INVALID = 77 [(errors.code) = 400];
+  // 扣减数量无效 - Bad Request
+  INVENTORY_NUM_INVALID = 78 [(errors.code) = 400];
+  // 库存已被锁定 - Conflict
+  INVENTORY_LOCKED = 79 [(errors.code) = 409];
+  // 库存锁定失败 - Internal Server Error
+  INVENTORY_LOCK_FAILED = 80 [(errors.code) = 500];
+  // 库存解锁失败 - Internal Server Error
+  INVENTORY_UNLOCK_FAILED = 81 [(errors.code) = 500];
+  // 库存记录已存在 - Conflict
+  INVENTORY_ALREADY_EXISTS = 82 [(errors.code) = 409];
+  // 批量操作失败 - Internal Server Error
+  INVENTORY_BATCH_FAILED = 83 [(errors.code) = 500];
+  // 库存数据不一致 - Conflict
+  INVENTORY_DATA_INCONSISTENT = 84 [(errors.code) = 409];
+  // 库存初始化失败 - Internal Server Error
+  INVENTORY_INIT_FAILED = 85 [(errors.code) = 500];
+  // 库存同步失败 - Internal Server Error
+  INVENTORY_SYNC_FAILED = 86 [(errors.code) = 500];
+  // 库存回滚失败 - Internal Server Error
+  INVENTORY_ROLLBACK_FAILED = 87 [(errors.code) = 500];
 }
 

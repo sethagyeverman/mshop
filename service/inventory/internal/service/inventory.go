@@ -19,14 +19,14 @@ func NewInventoryService(inventoryUsecase *biz.InventoryUsecase) *InventoryServi
 }
 
 func (s *InventoryService) SetInv(ctx context.Context, req *pb.GoodsInvInfo) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.inventoryUsecase.SetInv(ctx, req)
 }
 func (s *InventoryService) InvDetail(ctx context.Context, req *pb.GoodsInvInfo) (*pb.GoodsInvInfo, error) {
-	return &pb.GoodsInvInfo{}, nil
+	return s.inventoryUsecase.InvDetail(ctx, req)
 }
 func (s *InventoryService) Sell(ctx context.Context, req *pb.SellInfo) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.inventoryUsecase.Sell(ctx, req)
 }
 func (s *InventoryService) Reback(ctx context.Context, req *pb.SellInfo) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.inventoryUsecase.Reback(ctx, req)
 }

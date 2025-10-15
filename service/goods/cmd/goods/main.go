@@ -60,6 +60,7 @@ func main() {
 	sources, err := nacosx.NewNacosConfigSource(
 		nacosx.WithNamespace("mshop"),
 		nacosx.WithEnv(env),
+		nacosx.WithDataIds("goods.yaml"),
 	)
 
 	if err != nil {
@@ -69,6 +70,7 @@ func main() {
 	c := config.New(
 		config.WithSource(sources...),
 	)
+	defer c.Close()
 
 	if err := c.Load(); err != nil {
 		panic(err)
@@ -78,8 +80,6 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
-
-	defer c.Close()
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
 	if err != nil {

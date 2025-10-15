@@ -19,22 +19,22 @@ func NewGoodsService(goodsUsecase *biz.GoodsUsecase) *GoodsService {
 }
 
 func (s *GoodsService) GoodsList(ctx context.Context, req *pb.GoodsFilterRequest) (*pb.GoodsListResponse, error) {
-	return &pb.GoodsListResponse{}, nil
+	return s.goodsUsecase.GoodsList(ctx, req)
 }
 func (s *GoodsService) BatchGetGoods(ctx context.Context, req *pb.BatchGoodsIdInfo) (*pb.GoodsListResponse, error) {
-	return &pb.GoodsListResponse{}, nil
+	return s.goodsUsecase.BatchGetGoods(ctx, req)
 }
 func (s *GoodsService) CreateGoods(ctx context.Context, req *pb.CreateGoodsInfo) (*pb.GoodsInfoResponse, error) {
-	return &pb.GoodsInfoResponse{}, nil
+	return s.goodsUsecase.CreateGoods(ctx, req)
 }
 func (s *GoodsService) DeleteGoods(ctx context.Context, req *pb.DeleteGoodsInfo) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.DeleteGoods(ctx, req)
 }
 func (s *GoodsService) UpdateGoods(ctx context.Context, req *pb.CreateGoodsInfo) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
+	return s.goodsUsecase.UpdateGoods(ctx, req)
 }
 func (s *GoodsService) GetGoodsDetail(ctx context.Context, req *pb.GoodInfoRequest) (*pb.GoodsInfoResponse, error) {
-	return &pb.GoodsInfoResponse{}, nil
+	return s.goodsUsecase.GetGoodsDetail(ctx, req)
 }
 
 func (s *GoodsService) GetAllCategorysList(ctx context.Context, req *pb.Empty) (*pb.CategoryListResponse, error) {

@@ -1,13 +1,14 @@
 syntax = "proto3";
 package kratos.api;
 
-option go_package = "mshop/service/goods/internal/conf;conf";
+option go_package = "mshop/service/inventory/internal/conf;conf";
 
 import "google/protobuf/duration.proto";
 
 message Bootstrap {
   Server server = 1;
   Data data = 2;
+  Services services = 3;
 }
 
 message Server {
@@ -38,4 +39,13 @@ message Data {
   }
   Database database = 1;
   Redis redis = 2;
+}
+
+// 微服务配置
+message Services {
+  message GoodsService {
+    string endpoint = 1;  // goods 服务地址 (例如: "127.0.0.1:9000")
+    google.protobuf.Duration timeout = 2;  // 超时时间
+  }
+  GoodsService goods = 1;
 }

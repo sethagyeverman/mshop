@@ -666,3 +666,257 @@ func IsCategoryBrandDeleteFailed(err error) bool {
 func ErrorCategoryBrandDeleteFailed(format string, args ...interface{}) *errors.Error {
 	return errors.New(500, ErrorReason_CATEGORY_BRAND_DELETE_FAILED.String(), fmt.Sprintf(format, args...))
 }
+
+// ============ 库存错误 ============
+// 库存不存在 - Not Found
+func IsInventoryNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_NOT_FOUND.String() && e.Code == 404
+}
+
+// ============ 库存错误 ============
+// 库存不存在 - Not Found
+func ErrorInventoryNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(404, ErrorReason_INVENTORY_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存不足 - Bad Request
+func IsInventoryInsufficient(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_INSUFFICIENT.String() && e.Code == 400
+}
+
+// 库存不足 - Bad Request
+func ErrorInventoryInsufficient(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_INVENTORY_INSUFFICIENT.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存扣减失败 - Internal Server Error
+func IsInventorySellFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_SELL_FAILED.String() && e.Code == 500
+}
+
+// 库存扣减失败 - Internal Server Error
+func ErrorInventorySellFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_SELL_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存归还失败 - Internal Server Error
+func IsInventoryRebackFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_REBACK_FAILED.String() && e.Code == 500
+}
+
+// 库存归还失败 - Internal Server Error
+func ErrorInventoryRebackFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_REBACK_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存设置失败 - Internal Server Error
+func IsInventorySetFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_SET_FAILED.String() && e.Code == 500
+}
+
+// 库存设置失败 - Internal Server Error
+func ErrorInventorySetFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_SET_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单号为空 - Bad Request
+func IsOrderSnEmpty(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_SN_EMPTY.String() && e.Code == 400
+}
+
+// 订单号为空 - Bad Request
+func ErrorOrderSnEmpty(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_SN_EMPTY.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单号已存在 - Conflict
+func IsOrderSnExists(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_SN_EXISTS.String() && e.Code == 409
+}
+
+// 订单号已存在 - Conflict
+func ErrorOrderSnExists(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_ORDER_SN_EXISTS.String(), fmt.Sprintf(format, args...))
+}
+
+// 商品ID无效 - Bad Request
+func IsGoodsIdInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_GOODS_ID_INVALID.String() && e.Code == 400
+}
+
+// 商品ID无效 - Bad Request
+func ErrorGoodsIdInvalid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_GOODS_ID_INVALID.String(), fmt.Sprintf(format, args...))
+}
+
+// 扣减数量无效 - Bad Request
+func IsInventoryNumInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_NUM_INVALID.String() && e.Code == 400
+}
+
+// 扣减数量无效 - Bad Request
+func ErrorInventoryNumInvalid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_INVENTORY_NUM_INVALID.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存已被锁定 - Conflict
+func IsInventoryLocked(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_LOCKED.String() && e.Code == 409
+}
+
+// 库存已被锁定 - Conflict
+func ErrorInventoryLocked(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_INVENTORY_LOCKED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存锁定失败 - Internal Server Error
+func IsInventoryLockFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_LOCK_FAILED.String() && e.Code == 500
+}
+
+// 库存锁定失败 - Internal Server Error
+func ErrorInventoryLockFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_LOCK_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存解锁失败 - Internal Server Error
+func IsInventoryUnlockFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_UNLOCK_FAILED.String() && e.Code == 500
+}
+
+// 库存解锁失败 - Internal Server Error
+func ErrorInventoryUnlockFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_UNLOCK_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存记录已存在 - Conflict
+func IsInventoryAlreadyExists(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_ALREADY_EXISTS.String() && e.Code == 409
+}
+
+// 库存记录已存在 - Conflict
+func ErrorInventoryAlreadyExists(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_INVENTORY_ALREADY_EXISTS.String(), fmt.Sprintf(format, args...))
+}
+
+// 批量操作失败 - Internal Server Error
+func IsInventoryBatchFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_BATCH_FAILED.String() && e.Code == 500
+}
+
+// 批量操作失败 - Internal Server Error
+func ErrorInventoryBatchFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_BATCH_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存数据不一致 - Conflict
+func IsInventoryDataInconsistent(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_DATA_INCONSISTENT.String() && e.Code == 409
+}
+
+// 库存数据不一致 - Conflict
+func ErrorInventoryDataInconsistent(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_INVENTORY_DATA_INCONSISTENT.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存初始化失败 - Internal Server Error
+func IsInventoryInitFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_INIT_FAILED.String() && e.Code == 500
+}
+
+// 库存初始化失败 - Internal Server Error
+func ErrorInventoryInitFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_INIT_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存同步失败 - Internal Server Error
+func IsInventorySyncFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_SYNC_FAILED.String() && e.Code == 500
+}
+
+// 库存同步失败 - Internal Server Error
+func ErrorInventorySyncFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_SYNC_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 库存回滚失败 - Internal Server Error
+func IsInventoryRollbackFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_INVENTORY_ROLLBACK_FAILED.String() && e.Code == 500
+}
+
+// 库存回滚失败 - Internal Server Error
+func ErrorInventoryRollbackFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_INVENTORY_ROLLBACK_FAILED.String(), fmt.Sprintf(format, args...))
+}
