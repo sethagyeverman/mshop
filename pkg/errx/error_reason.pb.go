@@ -160,75 +160,167 @@ const (
 	ErrorReason_INVENTORY_SYNC_FAILED ErrorReason = 86
 	// 库存回滚失败 - Internal Server Error
 	ErrorReason_INVENTORY_ROLLBACK_FAILED ErrorReason = 87
+	// ============ 购物车错误 ============
+	// 购物车不存在 - Not Found
+	ErrorReason_CART_NOT_FOUND ErrorReason = 90
+	// 购物车为空 - Bad Request
+	ErrorReason_CART_EMPTY ErrorReason = 91
+	// 购物车商品不存在 - Not Found
+	ErrorReason_CART_ITEM_NOT_FOUND ErrorReason = 92
+	// 购物车添加失败 - Internal Server Error
+	ErrorReason_CART_CREATE_FAILED ErrorReason = 93
+	// 购物车更新失败 - Internal Server Error
+	ErrorReason_CART_UPDATE_FAILED ErrorReason = 94
+	// 购物车删除失败 - Internal Server Error
+	ErrorReason_CART_DELETE_FAILED ErrorReason = 95
+	// 购物车商品数量无效 - Bad Request
+	ErrorReason_CART_ITEM_NUM_INVALID ErrorReason = 96
+	// 购物车商品已存在 - Conflict
+	ErrorReason_CART_ITEM_EXISTS ErrorReason = 97
+	// 购物车已过期 - Gone
+	ErrorReason_CART_EXPIRED ErrorReason = 98
+	// 购物车商品超出限制 - Bad Request
+	ErrorReason_CART_ITEM_LIMIT_EXCEEDED ErrorReason = 99
+	// ============ 订单错误 ============
+	// 订单不存在 - Not Found
+	ErrorReason_ORDER_NOT_FOUND ErrorReason = 100
+	// 订单创建失败 - Internal Server Error
+	ErrorReason_ORDER_CREATE_FAILED ErrorReason = 101
+	// 订单更新失败 - Internal Server Error
+	ErrorReason_ORDER_UPDATE_FAILED ErrorReason = 102
+	// 订单删除失败 - Internal Server Error
+	ErrorReason_ORDER_DELETE_FAILED ErrorReason = 103
+	// 订单状态无效 - Bad Request
+	ErrorReason_ORDER_STATUS_INVALID ErrorReason = 104
+	// 订单已取消 - Gone
+	ErrorReason_ORDER_CANCELLED ErrorReason = 105
+	// 订单已完成 - Conflict
+	ErrorReason_ORDER_COMPLETED ErrorReason = 106
+	// 订单支付失败 - Internal Server Error
+	ErrorReason_ORDER_PAYMENT_FAILED ErrorReason = 107
+	// 订单已支付 - Conflict
+	ErrorReason_ORDER_ALREADY_PAID ErrorReason = 108
+	// 订单超时 - Request Timeout
+	ErrorReason_ORDER_TIMEOUT ErrorReason = 109
+	// 订单金额无效 - Bad Request
+	ErrorReason_ORDER_AMOUNT_INVALID ErrorReason = 110
+	// 订单商品为空 - Bad Request
+	ErrorReason_ORDER_GOODS_EMPTY ErrorReason = 111
+	// 订单地址无效 - Bad Request
+	ErrorReason_ORDER_ADDRESS_INVALID ErrorReason = 112
+	// 订单收货人信息无效 - Bad Request
+	ErrorReason_ORDER_RECEIVER_INVALID ErrorReason = 113
+	// 订单无法取消 - Conflict
+	ErrorReason_ORDER_CANNOT_CANCEL ErrorReason = 114
+	// 订单无法修改 - Conflict
+	ErrorReason_ORDER_CANNOT_MODIFY ErrorReason = 115
+	// 订单已发货 - Conflict
+	ErrorReason_ORDER_SHIPPED ErrorReason = 116
+	// 订单未支付 - Bad Request
+	ErrorReason_ORDER_NOT_PAID ErrorReason = 117
+	// 订单备注过长 - Bad Request
+	ErrorReason_ORDER_REMARK_TOO_LONG ErrorReason = 118
+	// 订单提交失败 - Internal Server Error
+	ErrorReason_ORDER_SUBMIT_FAILED ErrorReason = 119
 )
 
 // Enum value maps for ErrorReason.
 var (
 	ErrorReason_name = map[int32]string{
-		0:  "INVALID_PARAMS",
-		1:  "DATABASE_ERROR",
-		2:  "RECORD_NOT_FOUND",
-		3:  "INTERNAL_ERROR",
-		4:  "PERMISSION_DENIED",
-		5:  "UNAUTHORIZED",
-		10: "GOODS_NOT_FOUND",
-		11: "GOODS_OFF_SALE",
-		12: "GOODS_STOCK_INSUFFICIENT",
-		13: "GOODS_DELETED",
-		14: "GOODS_SN_EXISTS",
-		15: "GOODS_NAME_EMPTY",
-		16: "GOODS_PRICE_INVALID",
-		17: "GOODS_CREATE_FAILED",
-		18: "GOODS_UPDATE_FAILED",
-		19: "GOODS_DELETE_FAILED",
-		20: "BRAND_NOT_FOUND",
-		21: "BRAND_NAME_EXISTS",
-		22: "BRAND_NAME_EMPTY",
-		23: "BRAND_CREATE_FAILED",
-		24: "BRAND_UPDATE_FAILED",
-		25: "BRAND_DELETE_FAILED",
-		26: "BRAND_DELETED",
-		30: "CATEGORY_NOT_FOUND",
-		31: "CATEGORY_NAME_EXISTS",
-		32: "CATEGORY_NAME_EMPTY",
-		33: "CATEGORY_LEVEL_INVALID",
-		34: "PARENT_CATEGORY_NOT_FOUND",
-		35: "CATEGORY_CREATE_FAILED",
-		36: "CATEGORY_UPDATE_FAILED",
-		37: "CATEGORY_HAS_CHILDREN",
-		38: "CATEGORY_HAS_GOODS",
-		39: "CATEGORY_DELETED",
-		40: "CATEGORY_PARENT_INVALID",
-		50: "BANNER_NOT_FOUND",
-		51: "BANNER_IMAGE_EMPTY",
-		52: "BANNER_URL_EMPTY",
-		53: "BANNER_CREATE_FAILED",
-		54: "BANNER_UPDATE_FAILED",
-		55: "BANNER_DELETE_FAILED",
-		56: "BANNER_DELETED",
-		57: "BANNER_INDEX_EXISTS",
-		60: "CATEGORY_BRAND_NOT_FOUND",
-		61: "CATEGORY_BRAND_EXISTS",
-		62: "CATEGORY_BRAND_CREATE_FAILED",
-		63: "CATEGORY_BRAND_DELETE_FAILED",
-		70: "INVENTORY_NOT_FOUND",
-		71: "INVENTORY_INSUFFICIENT",
-		72: "INVENTORY_SELL_FAILED",
-		73: "INVENTORY_REBACK_FAILED",
-		74: "INVENTORY_SET_FAILED",
-		75: "ORDER_SN_EMPTY",
-		76: "ORDER_SN_EXISTS",
-		77: "GOODS_ID_INVALID",
-		78: "INVENTORY_NUM_INVALID",
-		79: "INVENTORY_LOCKED",
-		80: "INVENTORY_LOCK_FAILED",
-		81: "INVENTORY_UNLOCK_FAILED",
-		82: "INVENTORY_ALREADY_EXISTS",
-		83: "INVENTORY_BATCH_FAILED",
-		84: "INVENTORY_DATA_INCONSISTENT",
-		85: "INVENTORY_INIT_FAILED",
-		86: "INVENTORY_SYNC_FAILED",
-		87: "INVENTORY_ROLLBACK_FAILED",
+		0:   "INVALID_PARAMS",
+		1:   "DATABASE_ERROR",
+		2:   "RECORD_NOT_FOUND",
+		3:   "INTERNAL_ERROR",
+		4:   "PERMISSION_DENIED",
+		5:   "UNAUTHORIZED",
+		10:  "GOODS_NOT_FOUND",
+		11:  "GOODS_OFF_SALE",
+		12:  "GOODS_STOCK_INSUFFICIENT",
+		13:  "GOODS_DELETED",
+		14:  "GOODS_SN_EXISTS",
+		15:  "GOODS_NAME_EMPTY",
+		16:  "GOODS_PRICE_INVALID",
+		17:  "GOODS_CREATE_FAILED",
+		18:  "GOODS_UPDATE_FAILED",
+		19:  "GOODS_DELETE_FAILED",
+		20:  "BRAND_NOT_FOUND",
+		21:  "BRAND_NAME_EXISTS",
+		22:  "BRAND_NAME_EMPTY",
+		23:  "BRAND_CREATE_FAILED",
+		24:  "BRAND_UPDATE_FAILED",
+		25:  "BRAND_DELETE_FAILED",
+		26:  "BRAND_DELETED",
+		30:  "CATEGORY_NOT_FOUND",
+		31:  "CATEGORY_NAME_EXISTS",
+		32:  "CATEGORY_NAME_EMPTY",
+		33:  "CATEGORY_LEVEL_INVALID",
+		34:  "PARENT_CATEGORY_NOT_FOUND",
+		35:  "CATEGORY_CREATE_FAILED",
+		36:  "CATEGORY_UPDATE_FAILED",
+		37:  "CATEGORY_HAS_CHILDREN",
+		38:  "CATEGORY_HAS_GOODS",
+		39:  "CATEGORY_DELETED",
+		40:  "CATEGORY_PARENT_INVALID",
+		50:  "BANNER_NOT_FOUND",
+		51:  "BANNER_IMAGE_EMPTY",
+		52:  "BANNER_URL_EMPTY",
+		53:  "BANNER_CREATE_FAILED",
+		54:  "BANNER_UPDATE_FAILED",
+		55:  "BANNER_DELETE_FAILED",
+		56:  "BANNER_DELETED",
+		57:  "BANNER_INDEX_EXISTS",
+		60:  "CATEGORY_BRAND_NOT_FOUND",
+		61:  "CATEGORY_BRAND_EXISTS",
+		62:  "CATEGORY_BRAND_CREATE_FAILED",
+		63:  "CATEGORY_BRAND_DELETE_FAILED",
+		70:  "INVENTORY_NOT_FOUND",
+		71:  "INVENTORY_INSUFFICIENT",
+		72:  "INVENTORY_SELL_FAILED",
+		73:  "INVENTORY_REBACK_FAILED",
+		74:  "INVENTORY_SET_FAILED",
+		75:  "ORDER_SN_EMPTY",
+		76:  "ORDER_SN_EXISTS",
+		77:  "GOODS_ID_INVALID",
+		78:  "INVENTORY_NUM_INVALID",
+		79:  "INVENTORY_LOCKED",
+		80:  "INVENTORY_LOCK_FAILED",
+		81:  "INVENTORY_UNLOCK_FAILED",
+		82:  "INVENTORY_ALREADY_EXISTS",
+		83:  "INVENTORY_BATCH_FAILED",
+		84:  "INVENTORY_DATA_INCONSISTENT",
+		85:  "INVENTORY_INIT_FAILED",
+		86:  "INVENTORY_SYNC_FAILED",
+		87:  "INVENTORY_ROLLBACK_FAILED",
+		90:  "CART_NOT_FOUND",
+		91:  "CART_EMPTY",
+		92:  "CART_ITEM_NOT_FOUND",
+		93:  "CART_CREATE_FAILED",
+		94:  "CART_UPDATE_FAILED",
+		95:  "CART_DELETE_FAILED",
+		96:  "CART_ITEM_NUM_INVALID",
+		97:  "CART_ITEM_EXISTS",
+		98:  "CART_EXPIRED",
+		99:  "CART_ITEM_LIMIT_EXCEEDED",
+		100: "ORDER_NOT_FOUND",
+		101: "ORDER_CREATE_FAILED",
+		102: "ORDER_UPDATE_FAILED",
+		103: "ORDER_DELETE_FAILED",
+		104: "ORDER_STATUS_INVALID",
+		105: "ORDER_CANCELLED",
+		106: "ORDER_COMPLETED",
+		107: "ORDER_PAYMENT_FAILED",
+		108: "ORDER_ALREADY_PAID",
+		109: "ORDER_TIMEOUT",
+		110: "ORDER_AMOUNT_INVALID",
+		111: "ORDER_GOODS_EMPTY",
+		112: "ORDER_ADDRESS_INVALID",
+		113: "ORDER_RECEIVER_INVALID",
+		114: "ORDER_CANNOT_CANCEL",
+		115: "ORDER_CANNOT_MODIFY",
+		116: "ORDER_SHIPPED",
+		117: "ORDER_NOT_PAID",
+		118: "ORDER_REMARK_TOO_LONG",
+		119: "ORDER_SUBMIT_FAILED",
 	}
 	ErrorReason_value = map[string]int32{
 		"INVALID_PARAMS":               0,
@@ -295,6 +387,36 @@ var (
 		"INVENTORY_INIT_FAILED":        85,
 		"INVENTORY_SYNC_FAILED":        86,
 		"INVENTORY_ROLLBACK_FAILED":    87,
+		"CART_NOT_FOUND":               90,
+		"CART_EMPTY":                   91,
+		"CART_ITEM_NOT_FOUND":          92,
+		"CART_CREATE_FAILED":           93,
+		"CART_UPDATE_FAILED":           94,
+		"CART_DELETE_FAILED":           95,
+		"CART_ITEM_NUM_INVALID":        96,
+		"CART_ITEM_EXISTS":             97,
+		"CART_EXPIRED":                 98,
+		"CART_ITEM_LIMIT_EXCEEDED":     99,
+		"ORDER_NOT_FOUND":              100,
+		"ORDER_CREATE_FAILED":          101,
+		"ORDER_UPDATE_FAILED":          102,
+		"ORDER_DELETE_FAILED":          103,
+		"ORDER_STATUS_INVALID":         104,
+		"ORDER_CANCELLED":              105,
+		"ORDER_COMPLETED":              106,
+		"ORDER_PAYMENT_FAILED":         107,
+		"ORDER_ALREADY_PAID":           108,
+		"ORDER_TIMEOUT":                109,
+		"ORDER_AMOUNT_INVALID":         110,
+		"ORDER_GOODS_EMPTY":            111,
+		"ORDER_ADDRESS_INVALID":        112,
+		"ORDER_RECEIVER_INVALID":       113,
+		"ORDER_CANNOT_CANCEL":          114,
+		"ORDER_CANNOT_MODIFY":          115,
+		"ORDER_SHIPPED":                116,
+		"ORDER_NOT_PAID":               117,
+		"ORDER_REMARK_TOO_LONG":        118,
+		"ORDER_SUBMIT_FAILED":          119,
 	}
 )
 
@@ -329,7 +451,7 @@ var File_error_reason_proto protoreflect.FileDescriptor
 
 const file_error_reason_proto_rawDesc = "" +
 	"\n" +
-	"\x12error_reason.proto\x12\x04errx\x1a\x13errors/errors.proto*\xd6\x0f\n" +
+	"\x12error_reason.proto\x12\x04errx\x1a\x13errors/errors.proto*\xce\x16\n" +
 	"\vErrorReason\x12\x18\n" +
 	"\x0eINVALID_PARAMS\x10\x00\x1a\x04\xa8E\x90\x03\x12\x18\n" +
 	"\x0eDATABASE_ERROR\x10\x01\x1a\x04\xa8E\xf4\x03\x12\x1a\n" +
@@ -395,7 +517,38 @@ const file_error_reason_proto_rawDesc = "" +
 	"\x1bINVENTORY_DATA_INCONSISTENT\x10T\x1a\x04\xa8E\x99\x03\x12\x1f\n" +
 	"\x15INVENTORY_INIT_FAILED\x10U\x1a\x04\xa8E\xf4\x03\x12\x1f\n" +
 	"\x15INVENTORY_SYNC_FAILED\x10V\x1a\x04\xa8E\xf4\x03\x12#\n" +
-	"\x19INVENTORY_ROLLBACK_FAILED\x10W\x1a\x04\xa8E\xf4\x03\x1a\x04\xa0E\xf4\x03B.\n" +
+	"\x19INVENTORY_ROLLBACK_FAILED\x10W\x1a\x04\xa8E\xf4\x03\x12\x18\n" +
+	"\x0eCART_NOT_FOUND\x10Z\x1a\x04\xa8E\x94\x03\x12\x14\n" +
+	"\n" +
+	"CART_EMPTY\x10[\x1a\x04\xa8E\x90\x03\x12\x1d\n" +
+	"\x13CART_ITEM_NOT_FOUND\x10\\\x1a\x04\xa8E\x94\x03\x12\x1c\n" +
+	"\x12CART_CREATE_FAILED\x10]\x1a\x04\xa8E\xf4\x03\x12\x1c\n" +
+	"\x12CART_UPDATE_FAILED\x10^\x1a\x04\xa8E\xf4\x03\x12\x1c\n" +
+	"\x12CART_DELETE_FAILED\x10_\x1a\x04\xa8E\xf4\x03\x12\x1f\n" +
+	"\x15CART_ITEM_NUM_INVALID\x10`\x1a\x04\xa8E\x90\x03\x12\x1a\n" +
+	"\x10CART_ITEM_EXISTS\x10a\x1a\x04\xa8E\x99\x03\x12\x16\n" +
+	"\fCART_EXPIRED\x10b\x1a\x04\xa8E\x9a\x03\x12\"\n" +
+	"\x18CART_ITEM_LIMIT_EXCEEDED\x10c\x1a\x04\xa8E\x90\x03\x12\x19\n" +
+	"\x0fORDER_NOT_FOUND\x10d\x1a\x04\xa8E\x94\x03\x12\x1d\n" +
+	"\x13ORDER_CREATE_FAILED\x10e\x1a\x04\xa8E\xf4\x03\x12\x1d\n" +
+	"\x13ORDER_UPDATE_FAILED\x10f\x1a\x04\xa8E\xf4\x03\x12\x1d\n" +
+	"\x13ORDER_DELETE_FAILED\x10g\x1a\x04\xa8E\xf4\x03\x12\x1e\n" +
+	"\x14ORDER_STATUS_INVALID\x10h\x1a\x04\xa8E\x90\x03\x12\x19\n" +
+	"\x0fORDER_CANCELLED\x10i\x1a\x04\xa8E\x9a\x03\x12\x19\n" +
+	"\x0fORDER_COMPLETED\x10j\x1a\x04\xa8E\x99\x03\x12\x1e\n" +
+	"\x14ORDER_PAYMENT_FAILED\x10k\x1a\x04\xa8E\xf4\x03\x12\x1c\n" +
+	"\x12ORDER_ALREADY_PAID\x10l\x1a\x04\xa8E\x99\x03\x12\x17\n" +
+	"\rORDER_TIMEOUT\x10m\x1a\x04\xa8E\x98\x03\x12\x1e\n" +
+	"\x14ORDER_AMOUNT_INVALID\x10n\x1a\x04\xa8E\x90\x03\x12\x1b\n" +
+	"\x11ORDER_GOODS_EMPTY\x10o\x1a\x04\xa8E\x90\x03\x12\x1f\n" +
+	"\x15ORDER_ADDRESS_INVALID\x10p\x1a\x04\xa8E\x90\x03\x12 \n" +
+	"\x16ORDER_RECEIVER_INVALID\x10q\x1a\x04\xa8E\x90\x03\x12\x1d\n" +
+	"\x13ORDER_CANNOT_CANCEL\x10r\x1a\x04\xa8E\x99\x03\x12\x1d\n" +
+	"\x13ORDER_CANNOT_MODIFY\x10s\x1a\x04\xa8E\x99\x03\x12\x17\n" +
+	"\rORDER_SHIPPED\x10t\x1a\x04\xa8E\x99\x03\x12\x18\n" +
+	"\x0eORDER_NOT_PAID\x10u\x1a\x04\xa8E\x90\x03\x12\x1f\n" +
+	"\x15ORDER_REMARK_TOO_LONG\x10v\x1a\x04\xa8E\x90\x03\x12\x1d\n" +
+	"\x13ORDER_SUBMIT_FAILED\x10w\x1a\x04\xa8E\xf4\x03\x1a\x04\xa0E\xf4\x03B.\n" +
 	"\x0ecom.mshop.errxP\x01Z\x13mshop/pkg/errx;errx\xa2\x02\x04ERRXb\x06proto3"
 
 var (

@@ -920,3 +920,427 @@ func IsInventoryRollbackFailed(err error) bool {
 func ErrorInventoryRollbackFailed(format string, args ...interface{}) *errors.Error {
 	return errors.New(500, ErrorReason_INVENTORY_ROLLBACK_FAILED.String(), fmt.Sprintf(format, args...))
 }
+
+// ============ 购物车错误 ============
+// 购物车不存在 - Not Found
+func IsCartNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_NOT_FOUND.String() && e.Code == 404
+}
+
+// ============ 购物车错误 ============
+// 购物车不存在 - Not Found
+func ErrorCartNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(404, ErrorReason_CART_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车为空 - Bad Request
+func IsCartEmpty(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_EMPTY.String() && e.Code == 400
+}
+
+// 购物车为空 - Bad Request
+func ErrorCartEmpty(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_CART_EMPTY.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车商品不存在 - Not Found
+func IsCartItemNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_ITEM_NOT_FOUND.String() && e.Code == 404
+}
+
+// 购物车商品不存在 - Not Found
+func ErrorCartItemNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(404, ErrorReason_CART_ITEM_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车添加失败 - Internal Server Error
+func IsCartCreateFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_CREATE_FAILED.String() && e.Code == 500
+}
+
+// 购物车添加失败 - Internal Server Error
+func ErrorCartCreateFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_CART_CREATE_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车更新失败 - Internal Server Error
+func IsCartUpdateFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_UPDATE_FAILED.String() && e.Code == 500
+}
+
+// 购物车更新失败 - Internal Server Error
+func ErrorCartUpdateFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_CART_UPDATE_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车删除失败 - Internal Server Error
+func IsCartDeleteFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_DELETE_FAILED.String() && e.Code == 500
+}
+
+// 购物车删除失败 - Internal Server Error
+func ErrorCartDeleteFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_CART_DELETE_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车商品数量无效 - Bad Request
+func IsCartItemNumInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_ITEM_NUM_INVALID.String() && e.Code == 400
+}
+
+// 购物车商品数量无效 - Bad Request
+func ErrorCartItemNumInvalid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_CART_ITEM_NUM_INVALID.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车商品已存在 - Conflict
+func IsCartItemExists(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_ITEM_EXISTS.String() && e.Code == 409
+}
+
+// 购物车商品已存在 - Conflict
+func ErrorCartItemExists(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_CART_ITEM_EXISTS.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车已过期 - Gone
+func IsCartExpired(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_EXPIRED.String() && e.Code == 410
+}
+
+// 购物车已过期 - Gone
+func ErrorCartExpired(format string, args ...interface{}) *errors.Error {
+	return errors.New(410, ErrorReason_CART_EXPIRED.String(), fmt.Sprintf(format, args...))
+}
+
+// 购物车商品超出限制 - Bad Request
+func IsCartItemLimitExceeded(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_CART_ITEM_LIMIT_EXCEEDED.String() && e.Code == 400
+}
+
+// 购物车商品超出限制 - Bad Request
+func ErrorCartItemLimitExceeded(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_CART_ITEM_LIMIT_EXCEEDED.String(), fmt.Sprintf(format, args...))
+}
+
+// ============ 订单错误 ============
+// 订单不存在 - Not Found
+func IsOrderNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_NOT_FOUND.String() && e.Code == 404
+}
+
+// ============ 订单错误 ============
+// 订单不存在 - Not Found
+func ErrorOrderNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(404, ErrorReason_ORDER_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单创建失败 - Internal Server Error
+func IsOrderCreateFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_CREATE_FAILED.String() && e.Code == 500
+}
+
+// 订单创建失败 - Internal Server Error
+func ErrorOrderCreateFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ORDER_CREATE_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单更新失败 - Internal Server Error
+func IsOrderUpdateFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_UPDATE_FAILED.String() && e.Code == 500
+}
+
+// 订单更新失败 - Internal Server Error
+func ErrorOrderUpdateFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ORDER_UPDATE_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单删除失败 - Internal Server Error
+func IsOrderDeleteFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_DELETE_FAILED.String() && e.Code == 500
+}
+
+// 订单删除失败 - Internal Server Error
+func ErrorOrderDeleteFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ORDER_DELETE_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单状态无效 - Bad Request
+func IsOrderStatusInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_STATUS_INVALID.String() && e.Code == 400
+}
+
+// 订单状态无效 - Bad Request
+func ErrorOrderStatusInvalid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_STATUS_INVALID.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单已取消 - Gone
+func IsOrderCancelled(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_CANCELLED.String() && e.Code == 410
+}
+
+// 订单已取消 - Gone
+func ErrorOrderCancelled(format string, args ...interface{}) *errors.Error {
+	return errors.New(410, ErrorReason_ORDER_CANCELLED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单已完成 - Conflict
+func IsOrderCompleted(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_COMPLETED.String() && e.Code == 409
+}
+
+// 订单已完成 - Conflict
+func ErrorOrderCompleted(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_ORDER_COMPLETED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单支付失败 - Internal Server Error
+func IsOrderPaymentFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_PAYMENT_FAILED.String() && e.Code == 500
+}
+
+// 订单支付失败 - Internal Server Error
+func ErrorOrderPaymentFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ORDER_PAYMENT_FAILED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单已支付 - Conflict
+func IsOrderAlreadyPaid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_ALREADY_PAID.String() && e.Code == 409
+}
+
+// 订单已支付 - Conflict
+func ErrorOrderAlreadyPaid(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_ORDER_ALREADY_PAID.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单超时 - Request Timeout
+func IsOrderTimeout(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_TIMEOUT.String() && e.Code == 408
+}
+
+// 订单超时 - Request Timeout
+func ErrorOrderTimeout(format string, args ...interface{}) *errors.Error {
+	return errors.New(408, ErrorReason_ORDER_TIMEOUT.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单金额无效 - Bad Request
+func IsOrderAmountInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_AMOUNT_INVALID.String() && e.Code == 400
+}
+
+// 订单金额无效 - Bad Request
+func ErrorOrderAmountInvalid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_AMOUNT_INVALID.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单商品为空 - Bad Request
+func IsOrderGoodsEmpty(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_GOODS_EMPTY.String() && e.Code == 400
+}
+
+// 订单商品为空 - Bad Request
+func ErrorOrderGoodsEmpty(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_GOODS_EMPTY.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单地址无效 - Bad Request
+func IsOrderAddressInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_ADDRESS_INVALID.String() && e.Code == 400
+}
+
+// 订单地址无效 - Bad Request
+func ErrorOrderAddressInvalid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_ADDRESS_INVALID.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单收货人信息无效 - Bad Request
+func IsOrderReceiverInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_RECEIVER_INVALID.String() && e.Code == 400
+}
+
+// 订单收货人信息无效 - Bad Request
+func ErrorOrderReceiverInvalid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_RECEIVER_INVALID.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单无法取消 - Conflict
+func IsOrderCannotCancel(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_CANNOT_CANCEL.String() && e.Code == 409
+}
+
+// 订单无法取消 - Conflict
+func ErrorOrderCannotCancel(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_ORDER_CANNOT_CANCEL.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单无法修改 - Conflict
+func IsOrderCannotModify(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_CANNOT_MODIFY.String() && e.Code == 409
+}
+
+// 订单无法修改 - Conflict
+func ErrorOrderCannotModify(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_ORDER_CANNOT_MODIFY.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单已发货 - Conflict
+func IsOrderShipped(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_SHIPPED.String() && e.Code == 409
+}
+
+// 订单已发货 - Conflict
+func ErrorOrderShipped(format string, args ...interface{}) *errors.Error {
+	return errors.New(409, ErrorReason_ORDER_SHIPPED.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单未支付 - Bad Request
+func IsOrderNotPaid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_NOT_PAID.String() && e.Code == 400
+}
+
+// 订单未支付 - Bad Request
+func ErrorOrderNotPaid(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_NOT_PAID.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单备注过长 - Bad Request
+func IsOrderRemarkTooLong(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_REMARK_TOO_LONG.String() && e.Code == 400
+}
+
+// 订单备注过长 - Bad Request
+func ErrorOrderRemarkTooLong(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ORDER_REMARK_TOO_LONG.String(), fmt.Sprintf(format, args...))
+}
+
+// 订单提交失败 - Internal Server Error
+func IsOrderSubmitFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ORDER_SUBMIT_FAILED.String() && e.Code == 500
+}
+
+// 订单提交失败 - Internal Server Error
+func ErrorOrderSubmitFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ORDER_SUBMIT_FAILED.String(), fmt.Sprintf(format, args...))
+}

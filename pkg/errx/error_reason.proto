@@ -154,5 +154,69 @@ enum ErrorReason {
   INVENTORY_SYNC_FAILED = 86 [(errors.code) = 500];
   // 库存回滚失败 - Internal Server Error
   INVENTORY_ROLLBACK_FAILED = 87 [(errors.code) = 500];
+
+  // ============ 购物车错误 ============
+  // 购物车不存在 - Not Found
+  CART_NOT_FOUND = 90 [(errors.code) = 404];
+  // 购物车为空 - Bad Request
+  CART_EMPTY = 91 [(errors.code) = 400];
+  // 购物车商品不存在 - Not Found
+  CART_ITEM_NOT_FOUND = 92 [(errors.code) = 404];
+  // 购物车添加失败 - Internal Server Error
+  CART_CREATE_FAILED = 93 [(errors.code) = 500];
+  // 购物车更新失败 - Internal Server Error
+  CART_UPDATE_FAILED = 94 [(errors.code) = 500];
+  // 购物车删除失败 - Internal Server Error
+  CART_DELETE_FAILED = 95 [(errors.code) = 500];
+  // 购物车商品数量无效 - Bad Request
+  CART_ITEM_NUM_INVALID = 96 [(errors.code) = 400];
+  // 购物车商品已存在 - Conflict
+  CART_ITEM_EXISTS = 97 [(errors.code) = 409];
+  // 购物车已过期 - Gone
+  CART_EXPIRED = 98 [(errors.code) = 410];
+  // 购物车商品超出限制 - Bad Request
+  CART_ITEM_LIMIT_EXCEEDED = 99 [(errors.code) = 400];
+
+  // ============ 订单错误 ============
+  // 订单不存在 - Not Found
+  ORDER_NOT_FOUND = 100 [(errors.code) = 404];
+  // 订单创建失败 - Internal Server Error
+  ORDER_CREATE_FAILED = 101 [(errors.code) = 500];
+  // 订单更新失败 - Internal Server Error
+  ORDER_UPDATE_FAILED = 102 [(errors.code) = 500];
+  // 订单删除失败 - Internal Server Error
+  ORDER_DELETE_FAILED = 103 [(errors.code) = 500];
+  // 订单状态无效 - Bad Request
+  ORDER_STATUS_INVALID = 104 [(errors.code) = 400];
+  // 订单已取消 - Gone
+  ORDER_CANCELLED = 105 [(errors.code) = 410];
+  // 订单已完成 - Conflict
+  ORDER_COMPLETED = 106 [(errors.code) = 409];
+  // 订单支付失败 - Internal Server Error
+  ORDER_PAYMENT_FAILED = 107 [(errors.code) = 500];
+  // 订单已支付 - Conflict
+  ORDER_ALREADY_PAID = 108 [(errors.code) = 409];
+  // 订单超时 - Request Timeout
+  ORDER_TIMEOUT = 109 [(errors.code) = 408];
+  // 订单金额无效 - Bad Request
+  ORDER_AMOUNT_INVALID = 110 [(errors.code) = 400];
+  // 订单商品为空 - Bad Request
+  ORDER_GOODS_EMPTY = 111 [(errors.code) = 400];
+  // 订单地址无效 - Bad Request
+  ORDER_ADDRESS_INVALID = 112 [(errors.code) = 400];
+  // 订单收货人信息无效 - Bad Request
+  ORDER_RECEIVER_INVALID = 113 [(errors.code) = 400];
+  // 订单无法取消 - Conflict
+  ORDER_CANNOT_CANCEL = 114 [(errors.code) = 409];
+  // 订单无法修改 - Conflict
+  ORDER_CANNOT_MODIFY = 115 [(errors.code) = 409];
+  // 订单已发货 - Conflict
+  ORDER_SHIPPED = 116 [(errors.code) = 409];
+  // 订单未支付 - Bad Request
+  ORDER_NOT_PAID = 117 [(errors.code) = 400];
+  // 订单备注过长 - Bad Request
+  ORDER_REMARK_TOO_LONG = 118 [(errors.code) = 400];
+  // 订单提交失败 - Internal Server Error
+  ORDER_SUBMIT_FAILED = 119 [(errors.code) = 500];
 }
 

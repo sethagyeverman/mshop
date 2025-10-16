@@ -1,0 +1,395 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Order API
+    version: 0.0.1
+paths:
+    /v1/cart:
+        post:
+            tags:
+                - Order
+            description: 添加商品到购物车
+            operationId: Order_CreateCartItem
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.order.v1.CartItemRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.ShopCartInfoResponse'
+    /v1/cart/{id}:
+        get:
+            tags:
+                - Order
+            description: |-
+                购物车
+                 获取用户的购物车信息
+            operationId: Order_CartItemList
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.CartItemListResponse'
+        put:
+            tags:
+                - Order
+            description: 修改购物车信息
+            operationId: Order_UpdateCartItem
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.order.v1.CartItemRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.Empty'
+        delete:
+            tags:
+                - Order
+            description: 删除购物车条目
+            operationId: Order_DeleteCartItem
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: userId
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: goodsId
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: goodsName
+                  in: query
+                  schema:
+                    type: string
+                - name: goodsImage
+                  in: query
+                  schema:
+                    type: string
+                - name: goodsPrice
+                  in: query
+                  schema:
+                    type: number
+                    format: float
+                - name: nums
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: checked
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.Empty'
+    /v1/order:
+        get:
+            tags:
+                - Order
+            description: 订单列表
+            operationId: Order_OrderList
+            parameters:
+                - name: userId
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pages
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pagePerNums
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.OrderListResponse'
+        post:
+            tags:
+                - Order
+            description: |-
+                订单
+                 创建订单
+            operationId: Order_CreateOrder
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.order.v1.OrderRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.OrderInfoResponse'
+    /v1/order/{id}:
+        get:
+            tags:
+                - Order
+            description: 订单详情
+            operationId: Order_OrderDetail
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: userId
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: address
+                  in: query
+                  schema:
+                    type: string
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: mobile
+                  in: query
+                  schema:
+                    type: string
+                - name: post
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.OrderInfoDetailResponse'
+    /v1/order/{id}/status:
+        put:
+            tags:
+                - Order
+            description: 修改订单状态
+            operationId: Order_UpdateOrderStatus
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.order.v1.OrderStatus'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.order.v1.Empty'
+components:
+    schemas:
+        service.order.v1.CartItemListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.order.v1.ShopCartInfoResponse'
+        service.order.v1.CartItemRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                userId:
+                    type: integer
+                    format: int32
+                goodsId:
+                    type: integer
+                    format: int32
+                goodsName:
+                    type: string
+                goodsImage:
+                    type: string
+                goodsPrice:
+                    type: number
+                    format: float
+                nums:
+                    type: integer
+                    format: int32
+                checked:
+                    type: boolean
+        service.order.v1.Empty:
+            type: object
+            properties: {}
+        service.order.v1.OrderInfoDetailResponse:
+            type: object
+            properties:
+                orderInfo:
+                    $ref: '#/components/schemas/service.order.v1.OrderInfoResponse'
+                goods:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.order.v1.OrderItemResponse'
+        service.order.v1.OrderInfoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                userId:
+                    type: integer
+                    format: int32
+                orderSn:
+                    type: string
+                payType:
+                    type: string
+                status:
+                    type: string
+                post:
+                    type: string
+                total:
+                    type: number
+                    format: float
+                address:
+                    type: string
+                name:
+                    type: string
+                mobile:
+                    type: string
+                addTime:
+                    type: string
+        service.order.v1.OrderItemResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                orderId:
+                    type: integer
+                    format: int32
+                goodsId:
+                    type: integer
+                    format: int32
+                goodsName:
+                    type: string
+                goodsImage:
+                    type: string
+                goodsPrice:
+                    type: number
+                    format: float
+                nums:
+                    type: integer
+                    format: int32
+        service.order.v1.OrderListResponse:
+            type: object
+            properties:
+                total:
+                    type: integer
+                    format: int32
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.order.v1.OrderInfoResponse'
+        service.order.v1.OrderRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                userId:
+                    type: integer
+                    format: int32
+                address:
+                    type: string
+                name:
+                    type: string
+                mobile:
+                    type: string
+                post:
+                    type: string
+        service.order.v1.OrderStatus:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                orderSn:
+                    type: string
+                status:
+                    type: string
+        service.order.v1.ShopCartInfoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                userId:
+                    type: integer
+                    format: int32
+                goodsId:
+                    type: integer
+                    format: int32
+                nums:
+                    type: integer
+                    format: int32
+                checked:
+                    type: boolean
+tags:
+    - name: Order
