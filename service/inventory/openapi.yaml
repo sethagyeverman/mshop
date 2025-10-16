@@ -1,0 +1,115 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Inventory API
+    version: 0.0.1
+paths:
+    /v1/inventory/reback:
+        post:
+            tags:
+                - Inventory
+            description: 库存归还
+            operationId: Inventory_Reback
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.inventory.v1.SellInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.inventory.v1.Empty'
+    /v1/inventory/sell:
+        post:
+            tags:
+                - Inventory
+            description: 库存扣减
+            operationId: Inventory_Sell
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.inventory.v1.SellInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.inventory.v1.Empty'
+    /v1/inventory/set:
+        post:
+            tags:
+                - Inventory
+            description: 设置库存
+            operationId: Inventory_SetInv
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/service.inventory.v1.GoodsInvInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.inventory.v1.Empty'
+    /v1/inventory/{goodsId}:
+        get:
+            tags:
+                - Inventory
+            description: 获取库存信息
+            operationId: Inventory_InvDetail
+            parameters:
+                - name: goodsId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int32
+                - name: num
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/service.inventory.v1.GoodsInvInfo'
+components:
+    schemas:
+        service.inventory.v1.Empty:
+            type: object
+            properties: {}
+        service.inventory.v1.GoodsInvInfo:
+            type: object
+            properties:
+                goodsId:
+                    type: integer
+                    format: int32
+                num:
+                    type: integer
+                    format: int32
+        service.inventory.v1.SellInfo:
+            type: object
+            properties:
+                goodsInfo:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/service.inventory.v1.GoodsInvInfo'
+                orderSn:
+                    type: string
+tags:
+    - name: Inventory

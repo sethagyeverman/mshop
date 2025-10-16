@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package service.inventory.v1;
+
+option go_package = "mshop/service/inventory/api/inventory/v1;v1";
+option java_multiple_files = true;
+option java_package = "service.inventory.api.inventory.v1";
+
+import "inventory/v1/message.proto";
+import "google/api/annotations.proto";
+
+
+service Inventory {
+    // 设置库存
+    rpc SetInv(GoodsInvInfo) returns(Empty) {
+        option (google.api.http) = {
+            post: "/v1/inventory/set"
+            body: "*"
+        };
+    }
+    
+    // 获取库存信息
+    rpc InvDetail(GoodsInvInfo) returns (GoodsInvInfo) {
+        option (google.api.http) = {
+            get: "/v1/inventory/{goodsId}"
+        };
+    }
+    
+    // 库存扣减
+    rpc Sell(SellInfo) returns (Empty) {
+        option (google.api.http) = {
+            post: "/v1/inventory/sell"
+            body: "*"
+        };
+    }
+    
+    // 库存归还
+    rpc Reback(SellInfo) returns(Empty) {
+        option (google.api.http) = {
+            post: "/v1/inventory/reback"
+            body: "*"
+        };
+    }
+}

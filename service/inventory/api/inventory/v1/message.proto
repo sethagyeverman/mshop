@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package service.inventory.v1;
+
+option go_package = "mshop/service/inventory/api/inventory/v1;v1";
+option java_multiple_files = true;
+option java_package = "service.inventory.api.inventory.v1";
+
+
+message Empty {
+}
+
+
+message GoodsInvInfo {
+    int32 goodsId = 1;
+    int32 num = 2;
+}
+
+message SellInfo {
+    repeated GoodsInvInfo goodsInfo = 1;
+    string orderSn = 2;
+}

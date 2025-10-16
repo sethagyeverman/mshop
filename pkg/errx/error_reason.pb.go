@@ -22,8 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 商品服务错误码定义
-// 注意：errors.code 会被用作 HTTP 状态码，因此使用标准 HTTP 状态码
 type ErrorReason int32
 
 const (
@@ -125,6 +123,43 @@ const (
 	ErrorReason_CATEGORY_BRAND_CREATE_FAILED ErrorReason = 62
 	// 分类品牌关联删除失败 - Internal Server Error
 	ErrorReason_CATEGORY_BRAND_DELETE_FAILED ErrorReason = 63
+	// ============ 库存错误 ============
+	// 库存不存在 - Not Found
+	ErrorReason_INVENTORY_NOT_FOUND ErrorReason = 70
+	// 库存不足 - Bad Request
+	ErrorReason_INVENTORY_INSUFFICIENT ErrorReason = 71
+	// 库存扣减失败 - Internal Server Error
+	ErrorReason_INVENTORY_SELL_FAILED ErrorReason = 72
+	// 库存归还失败 - Internal Server Error
+	ErrorReason_INVENTORY_REBACK_FAILED ErrorReason = 73
+	// 库存设置失败 - Internal Server Error
+	ErrorReason_INVENTORY_SET_FAILED ErrorReason = 74
+	// 订单号为空 - Bad Request
+	ErrorReason_ORDER_SN_EMPTY ErrorReason = 75
+	// 订单号已存在 - Conflict
+	ErrorReason_ORDER_SN_EXISTS ErrorReason = 76
+	// 商品ID无效 - Bad Request
+	ErrorReason_GOODS_ID_INVALID ErrorReason = 77
+	// 扣减数量无效 - Bad Request
+	ErrorReason_INVENTORY_NUM_INVALID ErrorReason = 78
+	// 库存已被锁定 - Conflict
+	ErrorReason_INVENTORY_LOCKED ErrorReason = 79
+	// 库存锁定失败 - Internal Server Error
+	ErrorReason_INVENTORY_LOCK_FAILED ErrorReason = 80
+	// 库存解锁失败 - Internal Server Error
+	ErrorReason_INVENTORY_UNLOCK_FAILED ErrorReason = 81
+	// 库存记录已存在 - Conflict
+	ErrorReason_INVENTORY_ALREADY_EXISTS ErrorReason = 82
+	// 批量操作失败 - Internal Server Error
+	ErrorReason_INVENTORY_BATCH_FAILED ErrorReason = 83
+	// 库存数据不一致 - Conflict
+	ErrorReason_INVENTORY_DATA_INCONSISTENT ErrorReason = 84
+	// 库存初始化失败 - Internal Server Error
+	ErrorReason_INVENTORY_INIT_FAILED ErrorReason = 85
+	// 库存同步失败 - Internal Server Error
+	ErrorReason_INVENTORY_SYNC_FAILED ErrorReason = 86
+	// 库存回滚失败 - Internal Server Error
+	ErrorReason_INVENTORY_ROLLBACK_FAILED ErrorReason = 87
 )
 
 // Enum value maps for ErrorReason.
@@ -176,6 +211,24 @@ var (
 		61: "CATEGORY_BRAND_EXISTS",
 		62: "CATEGORY_BRAND_CREATE_FAILED",
 		63: "CATEGORY_BRAND_DELETE_FAILED",
+		70: "INVENTORY_NOT_FOUND",
+		71: "INVENTORY_INSUFFICIENT",
+		72: "INVENTORY_SELL_FAILED",
+		73: "INVENTORY_REBACK_FAILED",
+		74: "INVENTORY_SET_FAILED",
+		75: "ORDER_SN_EMPTY",
+		76: "ORDER_SN_EXISTS",
+		77: "GOODS_ID_INVALID",
+		78: "INVENTORY_NUM_INVALID",
+		79: "INVENTORY_LOCKED",
+		80: "INVENTORY_LOCK_FAILED",
+		81: "INVENTORY_UNLOCK_FAILED",
+		82: "INVENTORY_ALREADY_EXISTS",
+		83: "INVENTORY_BATCH_FAILED",
+		84: "INVENTORY_DATA_INCONSISTENT",
+		85: "INVENTORY_INIT_FAILED",
+		86: "INVENTORY_SYNC_FAILED",
+		87: "INVENTORY_ROLLBACK_FAILED",
 	}
 	ErrorReason_value = map[string]int32{
 		"INVALID_PARAMS":               0,
@@ -224,6 +277,24 @@ var (
 		"CATEGORY_BRAND_EXISTS":        61,
 		"CATEGORY_BRAND_CREATE_FAILED": 62,
 		"CATEGORY_BRAND_DELETE_FAILED": 63,
+		"INVENTORY_NOT_FOUND":          70,
+		"INVENTORY_INSUFFICIENT":       71,
+		"INVENTORY_SELL_FAILED":        72,
+		"INVENTORY_REBACK_FAILED":      73,
+		"INVENTORY_SET_FAILED":         74,
+		"ORDER_SN_EMPTY":               75,
+		"ORDER_SN_EXISTS":              76,
+		"GOODS_ID_INVALID":             77,
+		"INVENTORY_NUM_INVALID":        78,
+		"INVENTORY_LOCKED":             79,
+		"INVENTORY_LOCK_FAILED":        80,
+		"INVENTORY_UNLOCK_FAILED":      81,
+		"INVENTORY_ALREADY_EXISTS":     82,
+		"INVENTORY_BATCH_FAILED":       83,
+		"INVENTORY_DATA_INCONSISTENT":  84,
+		"INVENTORY_INIT_FAILED":        85,
+		"INVENTORY_SYNC_FAILED":        86,
+		"INVENTORY_ROLLBACK_FAILED":    87,
 	}
 )
 
@@ -258,7 +329,7 @@ var File_error_reason_proto protoreflect.FileDescriptor
 
 const file_error_reason_proto_rawDesc = "" +
 	"\n" +
-	"\x12error_reason.proto\x12\x04errx\x1a\x13errors/errors.proto*\x8b\v\n" +
+	"\x12error_reason.proto\x12\x04errx\x1a\x13errors/errors.proto*\xd6\x0f\n" +
 	"\vErrorReason\x12\x18\n" +
 	"\x0eINVALID_PARAMS\x10\x00\x1a\x04\xa8E\x90\x03\x12\x18\n" +
 	"\x0eDATABASE_ERROR\x10\x01\x1a\x04\xa8E\xf4\x03\x12\x1a\n" +
@@ -306,7 +377,25 @@ const file_error_reason_proto_rawDesc = "" +
 	"\x18CATEGORY_BRAND_NOT_FOUND\x10<\x1a\x04\xa8E\x94\x03\x12\x1f\n" +
 	"\x15CATEGORY_BRAND_EXISTS\x10=\x1a\x04\xa8E\x99\x03\x12&\n" +
 	"\x1cCATEGORY_BRAND_CREATE_FAILED\x10>\x1a\x04\xa8E\xf4\x03\x12&\n" +
-	"\x1cCATEGORY_BRAND_DELETE_FAILED\x10?\x1a\x04\xa8E\xf4\x03\x1a\x04\xa0E\xf4\x03B.\n" +
+	"\x1cCATEGORY_BRAND_DELETE_FAILED\x10?\x1a\x04\xa8E\xf4\x03\x12\x1d\n" +
+	"\x13INVENTORY_NOT_FOUND\x10F\x1a\x04\xa8E\x94\x03\x12 \n" +
+	"\x16INVENTORY_INSUFFICIENT\x10G\x1a\x04\xa8E\x90\x03\x12\x1f\n" +
+	"\x15INVENTORY_SELL_FAILED\x10H\x1a\x04\xa8E\xf4\x03\x12!\n" +
+	"\x17INVENTORY_REBACK_FAILED\x10I\x1a\x04\xa8E\xf4\x03\x12\x1e\n" +
+	"\x14INVENTORY_SET_FAILED\x10J\x1a\x04\xa8E\xf4\x03\x12\x18\n" +
+	"\x0eORDER_SN_EMPTY\x10K\x1a\x04\xa8E\x90\x03\x12\x19\n" +
+	"\x0fORDER_SN_EXISTS\x10L\x1a\x04\xa8E\x99\x03\x12\x1a\n" +
+	"\x10GOODS_ID_INVALID\x10M\x1a\x04\xa8E\x90\x03\x12\x1f\n" +
+	"\x15INVENTORY_NUM_INVALID\x10N\x1a\x04\xa8E\x90\x03\x12\x1a\n" +
+	"\x10INVENTORY_LOCKED\x10O\x1a\x04\xa8E\x99\x03\x12\x1f\n" +
+	"\x15INVENTORY_LOCK_FAILED\x10P\x1a\x04\xa8E\xf4\x03\x12!\n" +
+	"\x17INVENTORY_UNLOCK_FAILED\x10Q\x1a\x04\xa8E\xf4\x03\x12\"\n" +
+	"\x18INVENTORY_ALREADY_EXISTS\x10R\x1a\x04\xa8E\x99\x03\x12 \n" +
+	"\x16INVENTORY_BATCH_FAILED\x10S\x1a\x04\xa8E\xf4\x03\x12%\n" +
+	"\x1bINVENTORY_DATA_INCONSISTENT\x10T\x1a\x04\xa8E\x99\x03\x12\x1f\n" +
+	"\x15INVENTORY_INIT_FAILED\x10U\x1a\x04\xa8E\xf4\x03\x12\x1f\n" +
+	"\x15INVENTORY_SYNC_FAILED\x10V\x1a\x04\xa8E\xf4\x03\x12#\n" +
+	"\x19INVENTORY_ROLLBACK_FAILED\x10W\x1a\x04\xa8E\xf4\x03\x1a\x04\xa0E\xf4\x03B.\n" +
 	"\x0ecom.mshop.errxP\x01Z\x13mshop/pkg/errx;errx\xa2\x02\x04ERRXb\x06proto3"
 
 var (

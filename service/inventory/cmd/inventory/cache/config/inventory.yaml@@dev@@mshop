@@ -1,0 +1,22 @@
+server:
+  http:
+    addr: 0.0.0.0:8100
+    timeout: 1s
+  grpc:
+    addr: 0.0.0.0:9100
+    timeout: 1s
+
+data:
+  database:
+    driver: mysql
+    source: root:rootpassword@tcp(127.0.0.1:3306)/mshop?parseTime=True&loc=Local
+  redis:
+    addr: 127.0.0.1:6379
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+
+# 微服务配置
+services:
+  goods:
+    endpoint: 127.0.0.1:9000  # goods 服务的 gRPC 地址
+    timeout: 5s               # 调用超时时间
