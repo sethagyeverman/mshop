@@ -3,7 +3,9 @@ module mshop
 go 1.24.6
 
 require (
+	github.com/envoyproxy/protoc-gen-validate v1.2.1
 	github.com/go-kratos/kratos/contrib/config/nacos/v2 v2.0.0-20251015020953-cdff24709025
+	github.com/go-kratos/kratos/contrib/middleware/validate/v2 v2.0.0-20251015020953-cdff24709025
 	github.com/go-kratos/kratos/v2 v2.9.1
 	github.com/go-redsync/redsync/v4 v4.14.0
 	github.com/google/wire v0.7.0
@@ -19,9 +21,13 @@ require (
 )
 
 require (
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250717165733-d22d418d82d8.1 // indirect
+	buf.build/go/protovalidate v0.14.0 // indirect
+	cel.dev/expr v0.24.0 // indirect
 	dario.cat/mergo v1.0.0 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 // indirect
+	github.com/antlr4-go/antlr/v4 v4.13.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
@@ -29,6 +35,7 @@ require (
 	github.com/go-kratos/aegis v0.2.0 // indirect
 	github.com/go-playground/form/v4 v4.2.0 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
+	github.com/google/cel-go v0.25.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -41,19 +48,19 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af // indirect
 	github.com/json-iterator/go v1.1.6 // indirect
-	github.com/kr/text v0.2.0 // indirect
 	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f // indirect
 	github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
-	github.com/stretchr/testify v1.10.0 // indirect
+	github.com/stoewer/go-strcase v1.3.0 // indirect
 	github.com/toolkits/concurrent v0.0.0-20150624120057-a4371d70e3e3 // indirect
 	go.uber.org/atomic v1.6.0 // indirect
 	go.uber.org/multierr v1.5.0 // indirect
 	go.uber.org/zap v1.15.0 // indirect
 	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
 	golang.org/x/net v0.42.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/sys v0.34.0 // indirect

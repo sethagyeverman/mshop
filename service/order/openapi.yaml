@@ -10,7 +10,9 @@ paths:
         post:
             tags:
                 - Order
-            description: 添加商品到购物车
+            description: |-
+                添加商品到购物车
+                 如果商品已在购物车中，则累加数量；否则创建新记录
             operationId: Order_CreateCartItem
             requestBody:
                 content:
@@ -30,12 +32,13 @@ paths:
             tags:
                 - Order
             description: |-
-                购物车
-                 获取用户的购物车信息
+                获取用户的购物车列表
+                 返回指定用户的所有购物车商品信息
             operationId: Order_CartItemList
             parameters:
                 - name: id
                   in: path
+                  description: 用户ID，必须大于0
                   required: true
                   schema:
                     type: integer
@@ -50,11 +53,14 @@ paths:
         put:
             tags:
                 - Order
-            description: 修改购物车信息
+            description: |-
+                更新购物车商品信息
+                 可以修改商品数量和选中状态
             operationId: Order_UpdateCartItem
             parameters:
                 - name: id
                   in: path
+                  description: 购物车ID（更新/删除时必填）
                   required: true
                   schema:
                     type: integer
@@ -75,45 +81,55 @@ paths:
         delete:
             tags:
                 - Order
-            description: 删除购物车条目
+            description: |-
+                删除购物车商品
+                 从购物车中移除指定商品
             operationId: Order_DeleteCartItem
             parameters:
                 - name: id
                   in: path
+                  description: 购物车ID（更新/删除时必填）
                   required: true
                   schema:
                     type: integer
                     format: int32
                 - name: userId
                   in: query
+                  description: 用户ID
                   schema:
                     type: integer
                     format: int32
                 - name: goodsId
                   in: query
+                  description: 商品ID
                   schema:
                     type: integer
                     format: int32
                 - name: goodsName
                   in: query
+                  description: 商品名称
                   schema:
                     type: string
                 - name: goodsImage
                   in: query
+                  description: 商品图片URL
                   schema:
                     type: string
                 - name: goodsPrice
                   in: query
+                  description: 商品价格
                   schema:
                     type: number
                     format: float
                 - name: nums
                   in: query
+                  description: 商品数量，1-999
                   schema:
                     type: integer
                     format: int32
                 - name: checked
                   in: query
+                  description: 是否选中
                   schema:
                     type: boolean
             responses:
@@ -127,21 +143,26 @@ paths:
         get:
             tags:
                 - Order
-            description: 订单列表
+            description: |-
+                获取订单列表
+                 支持按用户ID筛选和分页查询
             operationId: Order_OrderList
             parameters:
                 - name: userId
                   in: query
+                  description: 用户ID（可选）
                   schema:
                     type: integer
                     format: int32
                 - name: pages
                   in: query
+                  description: 页码，从1开始
                   schema:
                     type: integer
                     format: int32
                 - name: pagePerNums
                   in: query
+                  description: 每页数量，1-100
                   schema:
                     type: integer
                     format: int32
@@ -156,8 +177,8 @@ paths:
             tags:
                 - Order
             description: |-
-                订单
-                 创建订单
+                创建订单
+                 从购物车中选中的商品创建订单，包括扣减库存、生成订单号等操作
             operationId: Order_CreateOrder
             requestBody:
                 content:
@@ -176,34 +197,42 @@ paths:
         get:
             tags:
                 - Order
-            description: 订单详情
+            description: |-
+                获取订单详情
+                 返回订单基本信息和订单商品明细列表
             operationId: Order_OrderDetail
             parameters:
                 - name: id
                   in: path
+                  description: 订单ID（查询详情时必填）
                   required: true
                   schema:
                     type: integer
                     format: int32
                 - name: userId
                   in: query
+                  description: 用户ID
                   schema:
                     type: integer
                     format: int32
                 - name: address
                   in: query
+                  description: 收货地址
                   schema:
                     type: string
                 - name: name
                   in: query
+                  description: 收货人姓名
                   schema:
                     type: string
                 - name: mobile
                   in: query
+                  description: 收货人手机号
                   schema:
                     type: string
                 - name: post
                   in: query
+                  description: 邮编
                   schema:
                     type: string
             responses:
@@ -217,11 +246,14 @@ paths:
         put:
             tags:
                 - Order
-            description: 修改订单状态
+            description: |-
+                更新订单状态
+                 修改订单的支付状态或配送状态
             operationId: Order_UpdateOrderStatus
             parameters:
                 - name: id
                   in: path
+                  description: 订单ID
                   required: true
                   schema:
                     type: integer
@@ -246,35 +278,47 @@ components:
             properties:
                 total:
                     type: integer
+                    description: 总记录数
                     format: int32
                 data:
                     type: array
                     items:
                         $ref: '#/components/schemas/service.order.v1.ShopCartInfoResponse'
+                    description: 购物车商品列表
+            description: 购物车列表响应
         service.order.v1.CartItemRequest:
             type: object
             properties:
                 id:
                     type: integer
+                    description: 购物车ID（更新/删除时必填）
                     format: int32
                 userId:
                     type: integer
+                    description: 用户ID
                     format: int32
                 goodsId:
                     type: integer
+                    description: 商品ID
                     format: int32
                 goodsName:
                     type: string
+                    description: 商品名称
                 goodsImage:
                     type: string
+                    description: 商品图片URL
                 goodsPrice:
                     type: number
+                    description: 商品价格
                     format: float
                 nums:
                     type: integer
+                    description: 商品数量，1-999
                     format: int32
                 checked:
                     type: boolean
+                    description: 是否选中
+            description: 购物车商品请求
         service.order.v1.Empty:
             type: object
             properties: {}
@@ -282,114 +326,158 @@ components:
             type: object
             properties:
                 orderInfo:
-                    $ref: '#/components/schemas/service.order.v1.OrderInfoResponse'
+                    allOf:
+                        - $ref: '#/components/schemas/service.order.v1.OrderInfoResponse'
+                    description: 订单基本信息
                 goods:
                     type: array
                     items:
                         $ref: '#/components/schemas/service.order.v1.OrderItemResponse'
+                    description: 订单商品列表
+            description: 订单详情响应
         service.order.v1.OrderInfoResponse:
             type: object
             properties:
                 id:
                     type: integer
+                    description: 订单ID
                     format: int32
                 userId:
                     type: integer
+                    description: 用户ID
                     format: int32
                 orderSn:
                     type: string
+                    description: 订单号
                 payType:
                     type: string
+                    description: 支付方式：alipay(支付宝)、wechat(微信)
                 status:
                     type: string
+                    description: 订单状态：WAIT_BUYER_PAY(待支付)、TRADE_SUCCESS(成功)等
                 post:
                     type: string
+                    description: 邮编
                 total:
                     type: number
+                    description: 订单总金额
                     format: float
                 address:
                     type: string
+                    description: 收货地址
                 name:
                     type: string
+                    description: 收货人姓名
                 mobile:
                     type: string
+                    description: 收货人手机号
                 addTime:
                     type: string
+                    description: 创建时间
+            description: 订单信息响应
         service.order.v1.OrderItemResponse:
             type: object
             properties:
                 id:
                     type: integer
+                    description: 订单商品ID
                     format: int32
                 orderId:
                     type: integer
+                    description: 订单ID
                     format: int32
                 goodsId:
                     type: integer
+                    description: 商品ID
                     format: int32
                 goodsName:
                     type: string
+                    description: 商品名称
                 goodsImage:
                     type: string
+                    description: 商品图片URL
                 goodsPrice:
                     type: number
+                    description: 商品单价
                     format: float
                 nums:
                     type: integer
+                    description: 购买数量
                     format: int32
+            description: 订单商品明细响应
         service.order.v1.OrderListResponse:
             type: object
             properties:
                 total:
                     type: integer
+                    description: 总记录数
                     format: int32
                 data:
                     type: array
                     items:
                         $ref: '#/components/schemas/service.order.v1.OrderInfoResponse'
+                    description: 订单列表
+            description: 订单列表响应
         service.order.v1.OrderRequest:
             type: object
             properties:
                 id:
                     type: integer
+                    description: 订单ID（查询详情时必填）
                     format: int32
                 userId:
                     type: integer
+                    description: 用户ID
                     format: int32
                 address:
                     type: string
+                    description: 收货地址
                 name:
                     type: string
+                    description: 收货人姓名
                 mobile:
                     type: string
+                    description: 收货人手机号
                 post:
                     type: string
+                    description: 邮编
+            description: 订单创建请求
         service.order.v1.OrderStatus:
             type: object
             properties:
                 id:
                     type: integer
+                    description: 订单ID
                     format: int32
                 orderSn:
                     type: string
+                    description: 订单号
                 status:
                     type: string
+                    description: 订单状态
+            description: 订单状态更新请求
         service.order.v1.ShopCartInfoResponse:
             type: object
             properties:
                 id:
                     type: integer
+                    description: 购物车ID
                     format: int32
                 userId:
                     type: integer
+                    description: 用户ID
                     format: int32
                 goodsId:
                     type: integer
+                    description: 商品ID
                     format: int32
                 nums:
                     type: integer
+                    description: 商品数量
                     format: int32
                 checked:
                     type: boolean
+                    description: 是否选中
+            description: 购物车商品信息响应
 tags:
     - name: Order

@@ -6,91 +6,150 @@ option go_package = "mshop/service/order/api/order/v1;v1";
 option java_multiple_files = true;
 option java_package = "service.order.api.order.v1";
 
+import "validate/validate.proto";
 
-message Empty {
-    
-}
+message Empty {}
 
-
+// 用户信息
 message UserInfo {
-    int32 id = 1;
+    // 用户ID，必须大于0
+    int32 id = 1 [(validate.rules).int32 = {gt: 0}];
 }
 
+// 订单状态更新请求
 message OrderStatus {
-    int32 id = 1;
-    string orderSn = 2;
-    string status = 3;
+    // 订单ID
+    int32 id = 1 [(validate.rules).int32 = {gt: 0}];
+    // 订单号
+    string orderSn = 2 [(validate.rules).string = {min_len: 1, max_len: 30}];
+    // 订单状态
+    string status = 3 [(validate.rules).string = {in: ["WAIT_BUYER_PAY", "PAYING", "TRADE_SUCCESS", "TRADE_CLOSED", "TRADE_FINISHED"]}];
 }
 
+// 购物车商品请求
 message CartItemRequest {
+    // 购物车ID（更新/删除时必填）
     int32 id = 1;
-    int32 userId = 2;
-    int32 goodsId = 3;
+    // 用户ID
+    int32 userId = 2 [(validate.rules).int32 = {gt: 0}];
+    // 商品ID
+    int32 goodsId = 3 [(validate.rules).int32 = {gt: 0}];
+    // 商品名称
     string goodsName = 4;
+    // 商品图片URL
     string goodsImage = 5;
+    // 商品价格
     float goodsPrice = 6;
-    int32 nums = 7;
+    // 商品数量，1-999
+    int32 nums = 7 [(validate.rules).int32 = {gt: 0, lte: 999}];
+    // 是否选中
     bool checked = 8;
 }
 
+// 订单创建请求
 message OrderRequest {
+    // 订单ID（查询详情时必填）
     int32 id = 1;
-    int32 userId = 2;
-    string address = 3;
-    string name = 4;
-    string mobile = 5;
-    string post = 6;
+    // 用户ID
+    int32 userId = 2 [(validate.rules).int32 = {gt: 0}];
+    // 收货地址
+    string address = 3 [(validate.rules).string = {min_len: 1, max_len: 200}];
+    // 收货人姓名
+    string name = 4 [(validate.rules).string = {min_len: 1, max_len: 20}];
+    // 收货人手机号
+    string mobile = 5 [(validate.rules).string = {pattern: "^1[3-9]\\d{9}$"}];
+    // 邮编
+    string post = 6 [(validate.rules).string = {max_len: 20}];
 }
 
+// 订单信息响应
 message OrderInfoResponse {
+    // 订单ID
     int32 id = 1;
+    // 用户ID
     int32 userId = 2;
+    // 订单号
     string orderSn = 3;
+    // 支付方式：alipay(支付宝)、wechat(微信)
     string payType = 4;
+    // 订单状态：WAIT_BUYER_PAY(待支付)、TRADE_SUCCESS(成功)等
     string status = 5;
+    // 邮编
     string post = 6;
+    // 订单总金额
     float total = 7;
+    // 收货地址
     string address = 8;
+    // 收货人姓名
     string name = 9;
+    // 收货人手机号
     string mobile = 10;
+    // 创建时间
     string addTime = 11;
 }
 
+// 购物车商品信息响应
 message ShopCartInfoResponse {
+    // 购物车ID
     int32 id = 1;
+    // 用户ID
     int32 userId = 2;
+    // 商品ID
     int32 goodsId = 3;
+    // 商品数量
     int32 nums = 4;
+    // 是否选中
     bool checked = 5;
 }
 
+// 订单商品明细响应
 message OrderItemResponse {
+    // 订单商品ID
     int32 id = 1;
+    // 订单ID
     int32 orderId = 2;
+    // 商品ID
     int32 goodsId = 3;
+    // 商品名称
     string goodsName = 4;
+    // 商品图片URL
     string goodsImage = 5;
+    // 商品单价
     float goodsPrice = 6;
+    // 购买数量
     int32 nums = 7;
 }
 
+// 订单详情响应
 message OrderInfoDetailResponse {
+    // 订单基本信息
     OrderInfoResponse orderInfo = 1;
+    // 订单商品列表
     repeated OrderItemResponse goods = 2;
 }
 
+// 订单列表查询请求
 message OrderFilterRequest {
+    // 用户ID（可选）
     int32 userId = 1;
-    int32 pages = 2;
-    int32 pagePerNums = 3;
+    // 页码，从1开始
+    int32 pages = 2 [(validate.rules).int32 = {gte: 1}];
+    // 每页数量，1-100
+    int32 pagePerNums = 3 [(validate.rules).int32 = {gte: 1, lte: 100}];
 }
 
+// 订单列表响应
 message OrderListResponse {
+    // 总记录数
     int32 total = 1;
+    // 订单列表
     repeated OrderInfoResponse data = 2;
 }
 
+// 购物车列表响应
 message CartItemListResponse {
+    // 总记录数
     int32 total = 1;
+    // 购物车商品列表
     repeated ShopCartInfoResponse data = 2;
 }

@@ -7,6 +7,7 @@
 package v1
 
 import (
+	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -57,9 +58,11 @@ func (*Empty) Descriptor() ([]byte, []int) {
 	return file_order_v1_message_proto_rawDescGZIP(), []int{0}
 }
 
+// 用户信息
 type UserInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 用户ID，必须大于0
+	Id            int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -101,11 +104,15 @@ func (x *UserInfo) GetId() int32 {
 	return 0
 }
 
+// 订单状态更新请求
 type OrderStatus struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	OrderSn       string                 `protobuf:"bytes,2,opt,name=orderSn,proto3" json:"orderSn,omitempty"`
-	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 订单ID
+	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// 订单号
+	OrderSn string `protobuf:"bytes,2,opt,name=orderSn,proto3" json:"orderSn,omitempty"`
+	// 订单状态
+	Status        string `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -161,16 +168,25 @@ func (x *OrderStatus) GetStatus() string {
 	return ""
 }
 
+// 购物车商品请求
 type CartItemRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        int32                  `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
-	GoodsId       int32                  `protobuf:"varint,3,opt,name=goodsId,proto3" json:"goodsId,omitempty"`
-	GoodsName     string                 `protobuf:"bytes,4,opt,name=goodsName,proto3" json:"goodsName,omitempty"`
-	GoodsImage    string                 `protobuf:"bytes,5,opt,name=goodsImage,proto3" json:"goodsImage,omitempty"`
-	GoodsPrice    float32                `protobuf:"fixed32,6,opt,name=goodsPrice,proto3" json:"goodsPrice,omitempty"`
-	Nums          int32                  `protobuf:"varint,7,opt,name=nums,proto3" json:"nums,omitempty"`
-	Checked       bool                   `protobuf:"varint,8,opt,name=checked,proto3" json:"checked,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 购物车ID（更新/删除时必填）
+	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// 用户ID
+	UserId int32 `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
+	// 商品ID
+	GoodsId int32 `protobuf:"varint,3,opt,name=goodsId,proto3" json:"goodsId,omitempty"`
+	// 商品名称
+	GoodsName string `protobuf:"bytes,4,opt,name=goodsName,proto3" json:"goodsName,omitempty"`
+	// 商品图片URL
+	GoodsImage string `protobuf:"bytes,5,opt,name=goodsImage,proto3" json:"goodsImage,omitempty"`
+	// 商品价格
+	GoodsPrice float32 `protobuf:"fixed32,6,opt,name=goodsPrice,proto3" json:"goodsPrice,omitempty"`
+	// 商品数量，1-999
+	Nums int32 `protobuf:"varint,7,opt,name=nums,proto3" json:"nums,omitempty"`
+	// 是否选中
+	Checked       bool `protobuf:"varint,8,opt,name=checked,proto3" json:"checked,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -261,14 +277,21 @@ func (x *CartItemRequest) GetChecked() bool {
 	return false
 }
 
+// 订单创建请求
 type OrderRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        int32                  `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
-	Address       string                 `protobuf:"bytes,3,opt,name=address,proto3" json:"address,omitempty"`
-	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	Mobile        string                 `protobuf:"bytes,5,opt,name=mobile,proto3" json:"mobile,omitempty"`
-	Post          string                 `protobuf:"bytes,6,opt,name=post,proto3" json:"post,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 订单ID（查询详情时必填）
+	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// 用户ID
+	UserId int32 `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
+	// 收货地址
+	Address string `protobuf:"bytes,3,opt,name=address,proto3" json:"address,omitempty"`
+	// 收货人姓名
+	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	// 收货人手机号
+	Mobile string `protobuf:"bytes,5,opt,name=mobile,proto3" json:"mobile,omitempty"`
+	// 邮编
+	Post          string `protobuf:"bytes,6,opt,name=post,proto3" json:"post,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -345,19 +368,31 @@ func (x *OrderRequest) GetPost() string {
 	return ""
 }
 
+// 订单信息响应
 type OrderInfoResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        int32                  `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
-	OrderSn       string                 `protobuf:"bytes,3,opt,name=orderSn,proto3" json:"orderSn,omitempty"`
-	PayType       string                 `protobuf:"bytes,4,opt,name=payType,proto3" json:"payType,omitempty"`
-	Status        string                 `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
-	Post          string                 `protobuf:"bytes,6,opt,name=post,proto3" json:"post,omitempty"`
-	Total         float32                `protobuf:"fixed32,7,opt,name=total,proto3" json:"total,omitempty"`
-	Address       string                 `protobuf:"bytes,8,opt,name=address,proto3" json:"address,omitempty"`
-	Name          string                 `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
-	Mobile        string                 `protobuf:"bytes,10,opt,name=mobile,proto3" json:"mobile,omitempty"`
-	AddTime       string                 `protobuf:"bytes,11,opt,name=addTime,proto3" json:"addTime,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 订单ID
+	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// 用户ID
+	UserId int32 `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
+	// 订单号
+	OrderSn string `protobuf:"bytes,3,opt,name=orderSn,proto3" json:"orderSn,omitempty"`
+	// 支付方式：alipay(支付宝)、wechat(微信)
+	PayType string `protobuf:"bytes,4,opt,name=payType,proto3" json:"payType,omitempty"`
+	// 订单状态：WAIT_BUYER_PAY(待支付)、TRADE_SUCCESS(成功)等
+	Status string `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
+	// 邮编
+	Post string `protobuf:"bytes,6,opt,name=post,proto3" json:"post,omitempty"`
+	// 订单总金额
+	Total float32 `protobuf:"fixed32,7,opt,name=total,proto3" json:"total,omitempty"`
+	// 收货地址
+	Address string `protobuf:"bytes,8,opt,name=address,proto3" json:"address,omitempty"`
+	// 收货人姓名
+	Name string `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
+	// 收货人手机号
+	Mobile string `protobuf:"bytes,10,opt,name=mobile,proto3" json:"mobile,omitempty"`
+	// 创建时间
+	AddTime       string `protobuf:"bytes,11,opt,name=addTime,proto3" json:"addTime,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -469,13 +504,19 @@ func (x *OrderInfoResponse) GetAddTime() string {
 	return ""
 }
 
+// 购物车商品信息响应
 type ShopCartInfoResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        int32                  `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
-	GoodsId       int32                  `protobuf:"varint,3,opt,name=goodsId,proto3" json:"goodsId,omitempty"`
-	Nums          int32                  `protobuf:"varint,4,opt,name=nums,proto3" json:"nums,omitempty"`
-	Checked       bool                   `protobuf:"varint,5,opt,name=checked,proto3" json:"checked,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 购物车ID
+	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// 用户ID
+	UserId int32 `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
+	// 商品ID
+	GoodsId int32 `protobuf:"varint,3,opt,name=goodsId,proto3" json:"goodsId,omitempty"`
+	// 商品数量
+	Nums int32 `protobuf:"varint,4,opt,name=nums,proto3" json:"nums,omitempty"`
+	// 是否选中
+	Checked       bool `protobuf:"varint,5,opt,name=checked,proto3" json:"checked,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -545,15 +586,23 @@ func (x *ShopCartInfoResponse) GetChecked() bool {
 	return false
 }
 
+// 订单商品明细响应
 type OrderItemResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	OrderId       int32                  `protobuf:"varint,2,opt,name=orderId,proto3" json:"orderId,omitempty"`
-	GoodsId       int32                  `protobuf:"varint,3,opt,name=goodsId,proto3" json:"goodsId,omitempty"`
-	GoodsName     string                 `protobuf:"bytes,4,opt,name=goodsName,proto3" json:"goodsName,omitempty"`
-	GoodsImage    string                 `protobuf:"bytes,5,opt,name=goodsImage,proto3" json:"goodsImage,omitempty"`
-	GoodsPrice    float32                `protobuf:"fixed32,6,opt,name=goodsPrice,proto3" json:"goodsPrice,omitempty"`
-	Nums          int32                  `protobuf:"varint,7,opt,name=nums,proto3" json:"nums,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 订单商品ID
+	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// 订单ID
+	OrderId int32 `protobuf:"varint,2,opt,name=orderId,proto3" json:"orderId,omitempty"`
+	// 商品ID
+	GoodsId int32 `protobuf:"varint,3,opt,name=goodsId,proto3" json:"goodsId,omitempty"`
+	// 商品名称
+	GoodsName string `protobuf:"bytes,4,opt,name=goodsName,proto3" json:"goodsName,omitempty"`
+	// 商品图片URL
+	GoodsImage string `protobuf:"bytes,5,opt,name=goodsImage,proto3" json:"goodsImage,omitempty"`
+	// 商品单价
+	GoodsPrice float32 `protobuf:"fixed32,6,opt,name=goodsPrice,proto3" json:"goodsPrice,omitempty"`
+	// 购买数量
+	Nums          int32 `protobuf:"varint,7,opt,name=nums,proto3" json:"nums,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -637,10 +686,13 @@ func (x *OrderItemResponse) GetNums() int32 {
 	return 0
 }
 
+// 订单详情响应
 type OrderInfoDetailResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderInfo     *OrderInfoResponse     `protobuf:"bytes,1,opt,name=orderInfo,proto3" json:"orderInfo,omitempty"`
-	Goods         []*OrderItemResponse   `protobuf:"bytes,2,rep,name=goods,proto3" json:"goods,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 订单基本信息
+	OrderInfo *OrderInfoResponse `protobuf:"bytes,1,opt,name=orderInfo,proto3" json:"orderInfo,omitempty"`
+	// 订单商品列表
+	Goods         []*OrderItemResponse `protobuf:"bytes,2,rep,name=goods,proto3" json:"goods,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -689,11 +741,15 @@ func (x *OrderInfoDetailResponse) GetGoods() []*OrderItemResponse {
 	return nil
 }
 
+// 订单列表查询请求
 type OrderFilterRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
-	Pages         int32                  `protobuf:"varint,2,opt,name=pages,proto3" json:"pages,omitempty"`
-	PagePerNums   int32                  `protobuf:"varint,3,opt,name=pagePerNums,proto3" json:"pagePerNums,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 用户ID（可选）
+	UserId int32 `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	// 页码，从1开始
+	Pages int32 `protobuf:"varint,2,opt,name=pages,proto3" json:"pages,omitempty"`
+	// 每页数量，1-100
+	PagePerNums   int32 `protobuf:"varint,3,opt,name=pagePerNums,proto3" json:"pagePerNums,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -749,10 +805,13 @@ func (x *OrderFilterRequest) GetPagePerNums() int32 {
 	return 0
 }
 
+// 订单列表响应
 type OrderListResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Total         int32                  `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
-	Data          []*OrderInfoResponse   `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 总记录数
+	Total int32 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	// 订单列表
+	Data          []*OrderInfoResponse `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -801,9 +860,12 @@ func (x *OrderListResponse) GetData() []*OrderInfoResponse {
 	return nil
 }
 
+// 购物车列表响应
 type CartItemListResponse struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	Total         int32                   `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 总记录数
+	Total int32 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	// 购物车商品列表
 	Data          []*ShopCartInfoResponse `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -857,34 +919,36 @@ var File_order_v1_message_proto protoreflect.FileDescriptor
 
 const file_order_v1_message_proto_rawDesc = "" +
 	"\n" +
-	"\x16order/v1/message.proto\x12\x10service.order.v1\"\a\n" +
-	"\x05Empty\"\x1a\n" +
-	"\bUserInfo\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\"O\n" +
-	"\vOrderStatus\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x18\n" +
-	"\aorderSn\x18\x02 \x01(\tR\aorderSn\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\tR\x06status\"\xdf\x01\n" +
+	"\x16order/v1/message.proto\x12\x10service.order.v1\x1a\x17validate/validate.proto\"\a\n" +
+	"\x05Empty\"#\n" +
+	"\bUserInfo\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x02id\"\xaf\x01\n" +
+	"\vOrderStatus\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x02id\x12#\n" +
+	"\aorderSn\x18\x02 \x01(\tB\t\xfaB\x06r\x04\x10\x01\x18\x1eR\aorderSn\x12b\n" +
+	"\x06status\x18\x03 \x01(\tBJ\xfaBGrER\x0eWAIT_BUYER_PAYR\x06PAYINGR\rTRADE_SUCCESSR\fTRADE_CLOSEDR\x0eTRADE_FINISHEDR\x06status\"\xfd\x01\n" +
 	"\x0fCartItemRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\x05R\x06userId\x12\x18\n" +
-	"\agoodsId\x18\x03 \x01(\x05R\agoodsId\x12\x1c\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1f\n" +
+	"\x06userId\x18\x02 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x06userId\x12!\n" +
+	"\agoodsId\x18\x03 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\agoodsId\x12\x1c\n" +
 	"\tgoodsName\x18\x04 \x01(\tR\tgoodsName\x12\x1e\n" +
 	"\n" +
 	"goodsImage\x18\x05 \x01(\tR\n" +
 	"goodsImage\x12\x1e\n" +
 	"\n" +
 	"goodsPrice\x18\x06 \x01(\x02R\n" +
-	"goodsPrice\x12\x12\n" +
-	"\x04nums\x18\a \x01(\x05R\x04nums\x12\x18\n" +
-	"\achecked\x18\b \x01(\bR\achecked\"\x90\x01\n" +
+	"goodsPrice\x12\x1e\n" +
+	"\x04nums\x18\a \x01(\x05B\n" +
+	"\xfaB\a\x1a\x05\x18\xe7\a \x00R\x04nums\x12\x18\n" +
+	"\achecked\x18\b \x01(\bR\achecked\"\xcf\x01\n" +
 	"\fOrderRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\x05R\x06userId\x12\x18\n" +
-	"\aaddress\x18\x03 \x01(\tR\aaddress\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\x12\x16\n" +
-	"\x06mobile\x18\x05 \x01(\tR\x06mobile\x12\x12\n" +
-	"\x04post\x18\x06 \x01(\tR\x04post\"\x91\x02\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1f\n" +
+	"\x06userId\x18\x02 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x06userId\x12$\n" +
+	"\aaddress\x18\x03 \x01(\tB\n" +
+	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\aaddress\x12\x1d\n" +
+	"\x04name\x18\x04 \x01(\tB\t\xfaB\x06r\x04\x10\x01\x18\x14R\x04name\x12,\n" +
+	"\x06mobile\x18\x05 \x01(\tB\x14\xfaB\x11r\x0f2\r^1[3-9]\\d{9}$R\x06mobile\x12\x1b\n" +
+	"\x04post\x18\x06 \x01(\tB\a\xfaB\x04r\x02\x18\x14R\x04post\"\x91\x02\n" +
 	"\x11OrderInfoResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\x05R\x06userId\x12\x18\n" +
@@ -918,11 +982,11 @@ const file_order_v1_message_proto_rawDesc = "" +
 	"\x04nums\x18\a \x01(\x05R\x04nums\"\x97\x01\n" +
 	"\x17OrderInfoDetailResponse\x12A\n" +
 	"\torderInfo\x18\x01 \x01(\v2#.service.order.v1.OrderInfoResponseR\torderInfo\x129\n" +
-	"\x05goods\x18\x02 \x03(\v2#.service.order.v1.OrderItemResponseR\x05goods\"d\n" +
+	"\x05goods\x18\x02 \x03(\v2#.service.order.v1.OrderItemResponseR\x05goods\"x\n" +
 	"\x12OrderFilterRequest\x12\x16\n" +
-	"\x06userId\x18\x01 \x01(\x05R\x06userId\x12\x14\n" +
-	"\x05pages\x18\x02 \x01(\x05R\x05pages\x12 \n" +
-	"\vpagePerNums\x18\x03 \x01(\x05R\vpagePerNums\"b\n" +
+	"\x06userId\x18\x01 \x01(\x05R\x06userId\x12\x1d\n" +
+	"\x05pages\x18\x02 \x01(\x05B\a\xfaB\x04\x1a\x02(\x01R\x05pages\x12+\n" +
+	"\vpagePerNums\x18\x03 \x01(\x05B\t\xfaB\x06\x1a\x04\x18d(\x01R\vpagePerNums\"b\n" +
 	"\x11OrderListResponse\x12\x14\n" +
 	"\x05total\x18\x01 \x01(\x05R\x05total\x127\n" +
 	"\x04data\x18\x02 \x03(\v2#.service.order.v1.OrderInfoResponseR\x04data\"h\n" +

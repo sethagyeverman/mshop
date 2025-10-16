@@ -103,30 +103,29 @@ func (uc *InventoryUsecase) Reback(ctx context.Context, req *pb.SellInfo) (_ *pb
 		}
 	}()
 
-	const maxRetries = 10 // 最大重试次数
-
 	for _, good := range req.GoodsInfo {
-		retries := 0
-		for {
+		lockKey := fmt.Sprintf("inventory:lock:goods:%d", good.GoodsId)
+		mutex := uc.rs.NewMutex(lockKey,
+			redsync.WithExpiry(10*time.Second),           // 锁过期时间
+			redsync.WithTries(3),                         // 重试次数
+			redsync.WithRetryDelay(100*time.Millisecond), // 重试间隔
+		)
+
+		if err := mutex.LockContext(ctx); err != nil {
 			var inv Inventory
 			if result := tx.Where("goods_id = ?", good.GoodsId).First(&inv); result.RowsAffected == 0 {
 				return nil, errx.ErrorInventoryNotFound("goods id %d not found", good.GoodsId)
 			}
 
-			// 乐观锁更新（归还库存也需要并发控制）
-			if result := tx.Where("goods_id = ? and version = ?", good.GoodsId, inv.Version).Updates(&Inventory{
-				Version: inv.Version + 1,
-				Stock:   inv.Stock + good.Num,
-			}); result.RowsAffected == 0 {
-				// 版本号冲突，重试
-				retries++
-				if retries >= maxRetries {
-					return nil, errx.ErrorInventoryRebackFailed("reback failed after %d retries for goods %d", maxRetries, good.GoodsId)
-				}
-				continue
+			tx.Where("goods_id = ?", good.GoodsId).Updates(&Inventory{
+				Stock: inv.Stock + good.Num,
+			})
+
+			if _, err := mutex.UnlockContext(ctx); err != nil {
+				uc.log.Errorf("Failed to release lock: %v", err)
 			}
-			break
 		}
 	}
 	return
+
 }

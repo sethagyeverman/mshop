@@ -29,23 +29,29 @@ const OperationOrderUpdateCartItem = "/service.order.v1.Order/UpdateCartItem"
 const OperationOrderUpdateOrderStatus = "/service.order.v1.Order/UpdateOrderStatus"
 
 type OrderHTTPServer interface {
-	// CartItemList购物车
-	// 获取用户的购物车信息
+	// CartItemList 获取用户的购物车列表
+	// 返回指定用户的所有购物车商品信息
 	CartItemList(context.Context, *UserInfo) (*CartItemListResponse, error)
 	// CreateCartItem 添加商品到购物车
+	// 如果商品已在购物车中，则累加数量；否则创建新记录
 	CreateCartItem(context.Context, *CartItemRequest) (*ShopCartInfoResponse, error)
-	// CreateOrder订单
-	// 创建订单
+	// CreateOrder 创建订单
+	// 从购物车中选中的商品创建订单，包括扣减库存、生成订单号等操作
 	CreateOrder(context.Context, *OrderRequest) (*OrderInfoResponse, error)
-	// DeleteCartItem 删除购物车条目
+	// DeleteCartItem 删除购物车商品
+	// 从购物车中移除指定商品
 	DeleteCartItem(context.Context, *CartItemRequest) (*Empty, error)
-	// OrderDetail 订单详情
+	// OrderDetail 获取订单详情
+	// 返回订单基本信息和订单商品明细列表
 	OrderDetail(context.Context, *OrderRequest) (*OrderInfoDetailResponse, error)
-	// OrderList 订单列表
+	// OrderList 获取订单列表
+	// 支持按用户ID筛选和分页查询
 	OrderList(context.Context, *OrderFilterRequest) (*OrderListResponse, error)
-	// UpdateCartItem 修改购物车信息
+	// UpdateCartItem 更新购物车商品信息
+	// 可以修改商品数量和选中状态
 	UpdateCartItem(context.Context, *CartItemRequest) (*Empty, error)
-	// UpdateOrderStatus 修改订单状态
+	// UpdateOrderStatus 更新订单状态
+	// 修改订单的支付状态或配送状态
 	UpdateOrderStatus(context.Context, *OrderStatus) (*Empty, error)
 }
 
@@ -241,23 +247,29 @@ func _Order_UpdateOrderStatus0_HTTP_Handler(srv OrderHTTPServer) func(ctx http.C
 }
 
 type OrderHTTPClient interface {
-	// CartItemList购物车
-	// 获取用户的购物车信息
+	// CartItemList 获取用户的购物车列表
+	// 返回指定用户的所有购物车商品信息
 	CartItemList(ctx context.Context, req *UserInfo, opts ...http.CallOption) (rsp *CartItemListResponse, err error)
 	// CreateCartItem 添加商品到购物车
+	// 如果商品已在购物车中，则累加数量；否则创建新记录
 	CreateCartItem(ctx context.Context, req *CartItemRequest, opts ...http.CallOption) (rsp *ShopCartInfoResponse, err error)
-	// CreateOrder订单
-	// 创建订单
+	// CreateOrder 创建订单
+	// 从购物车中选中的商品创建订单，包括扣减库存、生成订单号等操作
 	CreateOrder(ctx context.Context, req *OrderRequest, opts ...http.CallOption) (rsp *OrderInfoResponse, err error)
-	// DeleteCartItem 删除购物车条目
+	// DeleteCartItem 删除购物车商品
+	// 从购物车中移除指定商品
 	DeleteCartItem(ctx context.Context, req *CartItemRequest, opts ...http.CallOption) (rsp *Empty, err error)
-	// OrderDetail 订单详情
+	// OrderDetail 获取订单详情
+	// 返回订单基本信息和订单商品明细列表
 	OrderDetail(ctx context.Context, req *OrderRequest, opts ...http.CallOption) (rsp *OrderInfoDetailResponse, err error)
-	// OrderList 订单列表
+	// OrderList 获取订单列表
+	// 支持按用户ID筛选和分页查询
 	OrderList(ctx context.Context, req *OrderFilterRequest, opts ...http.CallOption) (rsp *OrderListResponse, err error)
-	// UpdateCartItem 修改购物车信息
+	// UpdateCartItem 更新购物车商品信息
+	// 可以修改商品数量和选中状态
 	UpdateCartItem(ctx context.Context, req *CartItemRequest, opts ...http.CallOption) (rsp *Empty, err error)
-	// UpdateOrderStatus 修改订单状态
+	// UpdateOrderStatus 更新订单状态
+	// 修改订单的支付状态或配送状态
 	UpdateOrderStatus(ctx context.Context, req *OrderStatus, opts ...http.CallOption) (rsp *Empty, err error)
 }
 
@@ -269,8 +281,8 @@ func NewOrderHTTPClient(client *http.Client) OrderHTTPClient {
 	return &OrderHTTPClientImpl{client}
 }
 
-// CartItemList购物车
-// 获取用户的购物车信息
+// CartItemList 获取用户的购物车列表
+// 返回指定用户的所有购物车商品信息
 func (c *OrderHTTPClientImpl) CartItemList(ctx context.Context, in *UserInfo, opts ...http.CallOption) (*CartItemListResponse, error) {
 	var out CartItemListResponse
 	pattern := "/v1/cart/{id}"
@@ -285,6 +297,7 @@ func (c *OrderHTTPClientImpl) CartItemList(ctx context.Context, in *UserInfo, op
 }
 
 // CreateCartItem 添加商品到购物车
+// 如果商品已在购物车中，则累加数量；否则创建新记录
 func (c *OrderHTTPClientImpl) CreateCartItem(ctx context.Context, in *CartItemRequest, opts ...http.CallOption) (*ShopCartInfoResponse, error) {
 	var out ShopCartInfoResponse
 	pattern := "/v1/cart"
@@ -298,8 +311,8 @@ func (c *OrderHTTPClientImpl) CreateCartItem(ctx context.Context, in *CartItemRe
 	return &out, nil
 }
 
-// CreateOrder订单
-// 创建订单
+// CreateOrder 创建订单
+// 从购物车中选中的商品创建订单，包括扣减库存、生成订单号等操作
 func (c *OrderHTTPClientImpl) CreateOrder(ctx context.Context, in *OrderRequest, opts ...http.CallOption) (*OrderInfoResponse, error) {
 	var out OrderInfoResponse
 	pattern := "/v1/order"
@@ -313,7 +326,8 @@ func (c *OrderHTTPClientImpl) CreateOrder(ctx context.Context, in *OrderRequest,
 	return &out, nil
 }
 
-// DeleteCartItem 删除购物车条目
+// DeleteCartItem 删除购物车商品
+// 从购物车中移除指定商品
 func (c *OrderHTTPClientImpl) DeleteCartItem(ctx context.Context, in *CartItemRequest, opts ...http.CallOption) (*Empty, error) {
 	var out Empty
 	pattern := "/v1/cart/{id}"
@@ -327,7 +341,8 @@ func (c *OrderHTTPClientImpl) DeleteCartItem(ctx context.Context, in *CartItemRe
 	return &out, nil
 }
 
-// OrderDetail 订单详情
+// OrderDetail 获取订单详情
+// 返回订单基本信息和订单商品明细列表
 func (c *OrderHTTPClientImpl) OrderDetail(ctx context.Context, in *OrderRequest, opts ...http.CallOption) (*OrderInfoDetailResponse, error) {
 	var out OrderInfoDetailResponse
 	pattern := "/v1/order/{id}"
@@ -341,7 +356,8 @@ func (c *OrderHTTPClientImpl) OrderDetail(ctx context.Context, in *OrderRequest,
 	return &out, nil
 }
 
-// OrderList 订单列表
+// OrderList 获取订单列表
+// 支持按用户ID筛选和分页查询
 func (c *OrderHTTPClientImpl) OrderList(ctx context.Context, in *OrderFilterRequest, opts ...http.CallOption) (*OrderListResponse, error) {
 	var out OrderListResponse
 	pattern := "/v1/order"
@@ -355,7 +371,8 @@ func (c *OrderHTTPClientImpl) OrderList(ctx context.Context, in *OrderFilterRequ
 	return &out, nil
 }
 
-// UpdateCartItem 修改购物车信息
+// UpdateCartItem 更新购物车商品信息
+// 可以修改商品数量和选中状态
 func (c *OrderHTTPClientImpl) UpdateCartItem(ctx context.Context, in *CartItemRequest, opts ...http.CallOption) (*Empty, error) {
 	var out Empty
 	pattern := "/v1/cart/{id}"
@@ -369,7 +386,8 @@ func (c *OrderHTTPClientImpl) UpdateCartItem(ctx context.Context, in *CartItemRe
 	return &out, nil
 }
 
-// UpdateOrderStatus 修改订单状态
+// UpdateOrderStatus 更新订单状态
+// 修改订单的支付状态或配送状态
 func (c *OrderHTTPClientImpl) UpdateOrderStatus(ctx context.Context, in *OrderStatus, opts ...http.CallOption) (*Empty, error) {
 	var out Empty
 	pattern := "/v1/order/{id}/status"
