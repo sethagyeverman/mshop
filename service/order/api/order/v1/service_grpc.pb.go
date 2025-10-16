@@ -33,23 +33,29 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderClient interface {
-	// 购物车
-	// 获取用户的购物车信息
+	// 获取用户的购物车列表
+	// 返回指定用户的所有购物车商品信息
 	CartItemList(ctx context.Context, in *UserInfo, opts ...grpc.CallOption) (*CartItemListResponse, error)
 	// 添加商品到购物车
+	// 如果商品已在购物车中，则累加数量；否则创建新记录
 	CreateCartItem(ctx context.Context, in *CartItemRequest, opts ...grpc.CallOption) (*ShopCartInfoResponse, error)
-	// 修改购物车信息
+	// 更新购物车商品信息
+	// 可以修改商品数量和选中状态
 	UpdateCartItem(ctx context.Context, in *CartItemRequest, opts ...grpc.CallOption) (*Empty, error)
-	// 删除购物车条目
+	// 删除购物车商品
+	// 从购物车中移除指定商品
 	DeleteCartItem(ctx context.Context, in *CartItemRequest, opts ...grpc.CallOption) (*Empty, error)
-	// 订单
 	// 创建订单
+	// 从购物车中选中的商品创建订单，包括扣减库存、生成订单号等操作
 	CreateOrder(ctx context.Context, in *OrderRequest, opts ...grpc.CallOption) (*OrderInfoResponse, error)
-	// 订单列表
+	// 获取订单列表
+	// 支持按用户ID筛选和分页查询
 	OrderList(ctx context.Context, in *OrderFilterRequest, opts ...grpc.CallOption) (*OrderListResponse, error)
-	// 订单详情
+	// 获取订单详情
+	// 返回订单基本信息和订单商品明细列表
 	OrderDetail(ctx context.Context, in *OrderRequest, opts ...grpc.CallOption) (*OrderInfoDetailResponse, error)
-	// 修改订单状态
+	// 更新订单状态
+	// 修改订单的支付状态或配送状态
 	UpdateOrderStatus(ctx context.Context, in *OrderStatus, opts ...grpc.CallOption) (*Empty, error)
 }
 
@@ -145,23 +151,29 @@ func (c *orderClient) UpdateOrderStatus(ctx context.Context, in *OrderStatus, op
 // All implementations must embed UnimplementedOrderServer
 // for forward compatibility.
 type OrderServer interface {
-	// 购物车
-	// 获取用户的购物车信息
+	// 获取用户的购物车列表
+	// 返回指定用户的所有购物车商品信息
 	CartItemList(context.Context, *UserInfo) (*CartItemListResponse, error)
 	// 添加商品到购物车
+	// 如果商品已在购物车中，则累加数量；否则创建新记录
 	CreateCartItem(context.Context, *CartItemRequest) (*ShopCartInfoResponse, error)
-	// 修改购物车信息
+	// 更新购物车商品信息
+	// 可以修改商品数量和选中状态
 	UpdateCartItem(context.Context, *CartItemRequest) (*Empty, error)
-	// 删除购物车条目
+	// 删除购物车商品
+	// 从购物车中移除指定商品
 	DeleteCartItem(context.Context, *CartItemRequest) (*Empty, error)
-	// 订单
 	// 创建订单
+	// 从购物车中选中的商品创建订单，包括扣减库存、生成订单号等操作
 	CreateOrder(context.Context, *OrderRequest) (*OrderInfoResponse, error)
-	// 订单列表
+	// 获取订单列表
+	// 支持按用户ID筛选和分页查询
 	OrderList(context.Context, *OrderFilterRequest) (*OrderListResponse, error)
-	// 订单详情
+	// 获取订单详情
+	// 返回订单基本信息和订单商品明细列表
 	OrderDetail(context.Context, *OrderRequest) (*OrderInfoDetailResponse, error)
-	// 修改订单状态
+	// 更新订单状态
+	// 修改订单的支付状态或配送状态
 	UpdateOrderStatus(context.Context, *OrderStatus) (*Empty, error)
 	mustEmbedUnimplementedOrderServer()
 }

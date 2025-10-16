@@ -5,8 +5,8 @@ import "time"
 // ShoppingCart 购物车表
 type ShoppingCart struct {
 	ID         int32     `gorm:"primarykey;type:int" json:"id"`
-	UserID     int32     `gorm:"type:int;index" json:"user_id"`
-	GoodsID    int32     `gorm:"type:int;index" json:"goods_id"`
+	UserId     int32     `gorm:"type:int;index" json:"user_id"`
+	GoodsId    int32     `gorm:"type:int;index" json:"goods_id"`
 	Nums       int32     `gorm:"type:int" json:"nums"`
 	Checked    bool      `gorm:"type:boolean;default:false" json:"checked"`
 	AddTime    time.Time `gorm:"type:datetime" json:"add_time"`
@@ -16,7 +16,7 @@ type ShoppingCart struct {
 // OrderInfo 订单表
 type OrderInfo struct {
 	ID      int32  `gorm:"primarykey;type:int" json:"id"`
-	UserID  int32  `gorm:"type:int;index" json:"user_id"`
+	UserId  int32  `gorm:"type:int;index" json:"user_id"`
 	OrderSn string `gorm:"type:varchar(30);index" json:"order_sn"` // 订单号
 	PayType string `gorm:"type:varchar(20);comment:'支付方式 alipay(支付宝)、wechat(微信)'" json:"pay_type"`
 
@@ -27,10 +27,10 @@ type OrderInfo struct {
 	TradeNo string `gorm:"type:varchar(100);comment:'交易号'" json:"trade_no"`
 
 	// 订单留言
-	OrderMount string `gorm:"type:varchar(200)" json:"order_mount"`
+	OrderAmount float64 `gorm:"type:float" json:"order_amount"`
 
 	// 支付时间
-	PayTime *time.Time `gorm:"type:datetime" json:"pay_time"`
+	PayTime time.Time `gorm:"type:datetime" json:"pay_time"`
 
 	// 收货人信息
 	Address      string `gorm:"type:varchar(200)" json:"address"`
@@ -46,8 +46,8 @@ type OrderInfo struct {
 type OrderGoods struct {
 	ID int32 `gorm:"primarykey;type:int" json:"id"`
 
-	OrderID int32 `gorm:"type:int;index" json:"order_id"` // 订单ID
-	GoodsID int32 `gorm:"type:int;index" json:"goods_id"` // 商品ID
+	OrderId int32 `gorm:"type:int;index" json:"order_id"` // 订单ID
+	GoodsId int32 `gorm:"type:int;index" json:"goods_id"` // 商品ID
 
 	// 冗余字段（避免商品信息变化后订单信息不准确）
 	GoodsName  string  `gorm:"type:varchar(100)" json:"goods_name"`
