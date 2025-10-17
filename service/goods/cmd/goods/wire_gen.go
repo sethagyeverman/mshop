@@ -28,11 +28,21 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	if err != nil {
 		return nil, nil, err
 	}
-	goodsUsecase := biz.NewGoodsUsecase(db, logger)
+	client, err := data.NewElasticsearch(confData, logger)
+	if err != nil {
+		return nil, nil, err
+	}
+	dataData, cleanup, err := data.NewData(confData, logger, db, client)
+	if err != nil {
+		return nil, nil, err
+	}
+	goodsRepo := data.NewGoodsRepo(dataData, logger)
+	goodsUsecase := biz.NewGoodsUsecase(db, logger, goodsRepo)
 	goodsService := service.NewGoodsService(goodsUsecase)
 	grpcServer := server.NewGRPCServer(confServer, goodsService, logger)
 	httpServer := server.NewHTTPServer(confServer, goodsService, logger)
 	app := newApp(logger, grpcServer, httpServer)
 	return app, func() {
+		cleanup()
 	}, nil
 }
