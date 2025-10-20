@@ -6,58 +6,58 @@ import (
 	pb "mshop/service/goods/api/goods/v1"
 )
 
+// GoodsList 商品列表查询
+// 使用 ES 进行搜索获取商品 ID，然后在 MySQL 中查询完整数据
 func (s *GoodsUsecase) GoodsList(ctx context.Context, req *pb.GoodsFilterRequest) (resp *pb.GoodsListResponse, err error) {
 	resp = &pb.GoodsListResponse{
 		Data: make([]*pb.GoodsInfoResponse, 0),
 	}
 
-	// 构建查询
-	query := s.db.Model(&Goods{}).Preload("Category").Preload("Brand")
-
-	// 价格过滤
-	if req.PriceMin > 0 {
-		query = query.Where("shop_price >= ?", req.PriceMin)
-	}
-	if req.PriceMax > 0 {
-		query = query.Where("shop_price <= ?", req.PriceMax)
+	// 1. 先从 ES 搜索获取商品 ID 列表
+	goodsIDs, total, err := s.goodsRepo.SearchGoodsIDs(ctx, req)
+	if err != nil {
+		s.log.Errorf("failed to search goods from ES: %v", err)
+		return nil, err
 	}
 
-	// 热销/新品过滤
-	if req.IsHot {
-		query = query.Where("is_hot = ?", true)
-	}
-	if req.IsNew {
-		query = query.Where("is_new = ?", true)
+	resp.Total = int32(total)
+
+	// 如果没有搜索结果，直接返回空列表
+	if len(goodsIDs) == 0 {
+		return resp, nil
 	}
 
-	// 品牌过滤
+	// 2. 根据 ID 列表从 MySQL 查询完整的商品信息
+	var goods []Goods
+	query := s.db.Model(&Goods{}).
+		Preload("Category").
+		Preload("Brand").
+		Where("id IN ?", goodsIDs)
+
+	// 品牌过滤（ES 中可能没有品牌信息，需要在 MySQL 中再次过滤）
 	if req.Brand > 0 {
 		query = query.Where("brand_id = ?", req.Brand)
 	}
 
-	// 分类过滤
-	if req.TopCategory > 0 {
-		query = query.Where("category_id = ?", req.TopCategory)
-	}
-
-	// 关键词搜索
-	if req.KeyWords != "" {
-		query = query.Where("name LIKE ?", "%"+req.KeyWords+"%")
-	}
-
-	// 获取总数
-	var count int64
-	query.Count(&count)
-	resp.Total = int32(count)
-
-	// 分页查询
-	var goods []Goods
-	if result := query.Scopes(s.Paginate(req.Pages, req.PagePerNums)).Find(&goods); result.Error != nil {
+	if result := query.Find(&goods); result.Error != nil {
+		s.log.Errorf("failed to query goods from MySQL: %v", result.Error)
 		return nil, result.Error
 	}
 
-	// 构建响应数据
-	for _, good := range goods {
+	// 3. 构建响应数据
+	// 创建 ID 到商品的映射，保持 ES 返回的顺序
+	goodsMap := make(map[int32]*Goods)
+	for i := range goods {
+		goodsMap[goods[i].ID] = &goods[i]
+	}
+
+	// 按照 ES 返回的 ID 顺序构建响应
+	for _, id := range goodsIDs {
+		good, exists := goodsMap[id]
+		if !exists {
+			continue
+		}
+
 		goodsInfo := &pb.GoodsInfoResponse{
 			Id:              good.ID,
 			Name:            good.Name,
@@ -97,7 +97,7 @@ func (s *GoodsUsecase) GoodsList(ctx context.Context, req *pb.GoodsFilterRequest
 		resp.Data = append(resp.Data, goodsInfo)
 	}
 
-	return
+	return resp, nil
 }
 
 func (s *GoodsUsecase) BatchGetGoods(ctx context.Context, req *pb.BatchGoodsIdInfo) (resp *pb.GoodsListResponse, err error) {

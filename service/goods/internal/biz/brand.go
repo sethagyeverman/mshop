@@ -3,6 +3,7 @@ package biz
 import (
 	"context"
 	"mshop/pkg/errx"
+	"mshop/pkg/utils"
 	pb "mshop/service/goods/api/goods/v1"
 )
 
@@ -10,7 +11,7 @@ func (uc *GoodsUsecase) BrandList(ctx context.Context, req *pb.BrandFilterReques
 	resp = &pb.BrandListResponse{}
 
 	var brands []*Brands
-	if result := uc.db.Scopes(uc.Paginate(req.Pages, req.PagePerNums)).Find(&brands); result.Error != nil {
+	if result := uc.db.Scopes(utils.Paginate(req.Pages, req.PagePerNums)).Find(&brands); result.Error != nil {
 		resp.Data = make([]*pb.BrandInfoResponse, 0)
 		return
 	}

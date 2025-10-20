@@ -23,12 +23,11 @@ func (Banner) TableName() string {
 	return "banner"
 }
 
-
 // Brands 品牌模型
 type Brands struct {
 	ID         int32          `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	Name       string         `gorm:"column:name;type:varchar(50);not null;uniqueIndex:brands_name" json:"name"`
-	Logo       string        `gorm:"column:logo;type:varchar(200)" json:"logo"`
+	Logo       string         `gorm:"column:logo;type:varchar(200)" json:"logo"`
 	AddTime    time.Time      `gorm:"column:add_time;not null" json:"add_time"`
 	IsDeleted  bool           `gorm:"column:is_deleted" json:"is_deleted"`
 	UpdateTime time.Time      `gorm:"column:update_time;not null" json:"update_time"`
@@ -44,13 +43,13 @@ func (Brands) TableName() string {
 type Category struct {
 	ID               int32          `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	Name             string         `gorm:"column:name;type:varchar(50);not null;index:category_name" json:"name"`
-	ParentCategoryID int32         `gorm:"column:parent_category_id;index:category_parent_category_id" json:"parent_category_id"`
+	ParentCategoryID int32          `gorm:"column:parent_category_id;index:category_parent_category_id" json:"parent_category_id"`
 	Level            int32          `gorm:"column:level;not null" json:"level"`
 	IsTab            bool           `gorm:"column:is_tab;not null" json:"is_tab"`
 	URL              string         `gorm:"column:url;type:varchar(300);not null;index:category_url" json:"url"`
-	AddTime          time.Time     `gorm:"column:add_time" json:"add_time"`
+	AddTime          time.Time      `gorm:"column:add_time" json:"add_time"`
 	IsDeleted        bool           `gorm:"column:is_deleted" json:"is_deleted"`
-	UpdateTime       time.Time     `gorm:"column:update_time" json:"update_time"`
+	UpdateTime       time.Time      `gorm:"column:update_time" json:"update_time"`
 	DeletedAt        gorm.DeletedAt `gorm:"column:deleted_at;index" json:"deleted_at"`
 
 	// 自引用关联
@@ -97,6 +96,25 @@ type Goods struct {
 // TableName 指定表名
 func (Goods) TableName() string {
 	return "goods"
+}
+
+// es中商品数据模型
+type EsGoods struct {
+	ID         int32 `json:"id"`
+	CategoryID int32 `json:"category_id"`
+	OnSale     bool  `json:"on_sale"`
+	ShipFree   bool  `json:"ship_free"`
+	IsNew      bool  `json:"is_new"`
+	IsHot      bool  `json:"is_hot"`
+
+	Name     string `json:"name"`
+	ClickNum int32  `json:"click_num"`
+	SoldNum  int32  `json:"sold_num"`
+	FavNum   int32  `json:"fav_num"`
+
+	MarketPrice float32 `json:"market_price"`
+	GoodsBrief  string  `json:"goods_brief"`
+	ShopPrice   float32 `json:"shop_price"`
 }
 
 // GoodsCategoryBrand 商品分类品牌关联模型
